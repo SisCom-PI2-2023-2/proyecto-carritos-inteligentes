@@ -20,7 +20,7 @@
 domain: siscom-pi2-2023-2.github.io       # if you want to force HTTPS, specify the domain without the http at the start, e.g. example.com
 url: https://siscom-pi2-2023-2.github.io/proyecto-carritos-inteligentes  # the base hostname and protocol for your site, e.g. http://example.com
 
-title: Proyecto Impresionante!
+title: OptiShop
 email: your-email@example.com
 description: >- # this means to ignore newlines until "baseurl:"
   Trabajo realizado en el marco de la asignatura Proyecto Integrador 2, Universidad ORT Uruguay.
