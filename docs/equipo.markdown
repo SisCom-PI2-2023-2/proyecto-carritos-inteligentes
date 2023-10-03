@@ -6,7 +6,7 @@ permalink: /equipo/
 
 ## Información del equipo...
 
-![mtstmichel](/assets/Juanfra.jpg)
-![mtstmichel](/assets/Lucas.jpg)
+![Juanfra](/assets/Juanfra.jpg)
+![Lucas](/assets/Lucas.jpg)
 
 Pueden poner links y fotos!
