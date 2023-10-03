@@ -10,7 +10,7 @@ Esta es la página principal. La pueden ajustar a su gusto usando [markdown](htt
 
 Así se agrega una imagen. En general se guardan en la carpeta `assets`:
 
-![mtstmichel](/assets/mtstmichel.jpg)
+![foto-terminada](/assets/foto-terminada.jpg)
 
 
 ## Código incluido
