@@ -1,0 +1,15 @@
+Sensor inercial: IMU MPU-9250
+El sensor IMU 9250 tiene nueve grados de libertad y cuenta con tres sensores: acelerómetro,
+giróscopo y magnetómetro. Todo esto en un mismo integrado y gracias a esto, tiene la
+capacidad de realizar las mediciones de manera simultánea.
+Este modelo incorpora un integrado IMU6050, que está formado por el acelerómetro y el
+giróscopo como se explica en el apartado anterior. Y un magnetómetro AK8975. La
+comunicación se puede realizar tanto por bus SPI como por el bus I2C.
+Su tensión de alimentación va de 2,4 a 3,6V. Pero de la misma forma que el anterior sensor,
+cuenta con un regulador de tensión para conectarlo a 5V.
+Dispone de conversores analógicos digitales (ADC) de 16 bits. El rango del acelerómetro
+puede ajustarse a ±2g, ±4g, ±8g y ±16g, el del giroscopio a ±250, ±500, ±1000 y ±2000 ˚/s y
+el magnetómetro hasta ±4800µT.
+También está compuesto por un procesador interno Digital Motion Processor (DMP), el cual
+ejecuta los algoritmos complejos evitando tener que usar filtros de forma exterior.
+La ventaja de este sensor es que al tener un magnetómetro elimina el error de deriva (Drift).
