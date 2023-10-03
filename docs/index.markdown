@@ -4,7 +4,7 @@
 
 layout: home
 ---
-
+<title>Esto es una prueba</title>
 Esta es la página principal. La pueden ajustar a su gusto usando [markdown](https://www.markdownguide.org/basic-syntax/)
 
 ## Ejemplo
