@@ -2,7 +2,10 @@
 #include <MPU9250_WE.h>
 #include <Wire.h>
 
-MPU9250_WE imu;
+#define MPU9250_ADDR 0x68
+
+
+MPU9250_WE imu = MPU9250_WE(MPU9250_ADDR);
 
 float dt = 0.01;  // Intervalo de tiempo en segundos (ajusta según sea necesario)
 float accX, accY, accZ;
@@ -13,8 +16,7 @@ float positionX = 0, positionY = 0, positionZ = 0;
 
 void setup() {
   Wire.begin();
-  imu.setWire(&Wire);
-  if (!imu.begin()) {
+  if (!imu.init()) {
     Serial.println("No se pudo iniciar el sensor MPU9250. Comprueba las conexiones.");
     while (1);
   }
@@ -22,14 +24,21 @@ void setup() {
 }
 
 void loop() {
-  imu.readSensor();
+  xyzFloat accRaw;
+  xyzFloat gyrRaw;
+  xyzFloat corrAccRaw;
+  xyzFloat corrGyrRaw;
+  accRaw = imu.getAccRawValues();
+  gyrRaw = imu.getGyrRawValues();
+  corrAccRaw = imu.getCorrectedAccRawValues();
+  corrGyrRaw = imu.getCorrectedGyrRawValues();
   
-  accX = imu.getAccelX_mss();
-  accY = imu.getAccelY_mss();
-  accZ = imu.getAccelZ_mss();
-  gyroX = imu.getGyroX_rads();
-  gyroY = imu.getGyroY_rads();
-  gyroZ = imu.getGyroZ_rads();
+  accX = accRaw.x;
+  accY = accRaw.y;
+  accZ = accRaw.z;
+  gyroX = gyrRaw.x;
+  gyroY = gyrRaw.y;
+  gyroZ = gyrRaw.z;
 
   // Actualiza la velocidad usando datos del giroscopio
   velocityX += gyroX * dt;
