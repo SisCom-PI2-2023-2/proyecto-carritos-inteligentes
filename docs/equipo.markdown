@@ -6,6 +6,6 @@ permalink: /equipo/
 
 ## Información del equipo...
 
-![Juanfra|10](/assets/Juanfra.jpg)
-![Lucas|100](/assets/Lucas.jpg)
+![Juanfra](/assets/Juanfra.jpg){width=10%}
+![Lucas](/assets/Lucas.jpg){height=10%}
 Pueden poner links y fotos!
