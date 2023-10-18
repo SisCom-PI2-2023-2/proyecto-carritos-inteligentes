@@ -1,4 +1,4 @@
-/***************************************************************************
+/*************************
 * Example sketch for the MPU9250_WE library
 *
 * This sketch shows how to obtain gyroscope data from the MPU9250. 
@@ -8,7 +8,7 @@
 * https://wolles-elektronikkiste.de/mpu9250-9-achsen-sensormodul-teil-1  (German)
 * https://wolles-elektronikkiste.de/en/mpu9250-9-axis-sensor-module-part-1  (English)
 * 
-***************************************************************************/
+*************************/
 
 #include <MPU9250_WE.h>
 #include <Wire.h>
@@ -131,14 +131,17 @@ void loop() {
     xyzFloat gyrRaw = myMPU9250.getGyrRawValues();
     xyzFloat corrGyrRaw = myMPU9250.getCorrectedGyrRawValues();
     xyzFloat gyr = myMPU9250.getGyrValues();
-    
+     if(gyr.z<0.05 && gyr.z>-0.05){
+      gyr.z=0;
+    }
     thetaZ = thetaZ + (currentMillis - previousMillis)*gyr.z*1000;
     
     previousMillis = currentMillis;
 
-    Serial.print("thetaZ:");
-    Serial.print(thetaZ/100000);
+  Serial.print("thetaZ:");
+    Serial.print(thetaZ/1000000);
     Serial.print(",omegaZ:");
+   
     Serial.println(gyr.z);
   }
 }
