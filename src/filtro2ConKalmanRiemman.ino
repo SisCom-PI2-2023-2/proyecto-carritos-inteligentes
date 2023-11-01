@@ -104,13 +104,6 @@ unsigned long previousMillis = 0;
 const long interval = 25; 
 xyzFloat corrAccRaw;
 
-float Vres1 = 0;
-float Vres2 = 0;
-float Vres3;
-float Vmed1 = 0;
-float Vmed2 = 0;
-float Vmed3;
-
 void loop() {
 
   // eventually update your evolution matrix inside the loop
@@ -138,23 +131,10 @@ void loop() {
     velYa = velY;
     velY = velYa + (dt)*promAccY;
     
-    //promVelY = 0.5*(velYa + velY);
-/*
-    if(promVelY<10 && promVelY>-10){
-      promVelY=0;
-    }
-    */
-    Vmed3 = Vmed2;
-    Vmed2 = Vmed1;
-    Vmed1 = velY;
-
-    Vres3 = Vres2;
-    Vres2 = Vres1;
-    
-    Vres1 = Vmed1 + Vmed3 - 0.9*0.9*Vres3;  
+    promVelY = 0.5*(velYa + velY);
     
     posYa = posY;
-    posY = posYa + Vres1*dt;
+    posY = posYa + promVelY*dt;
     
     
     
@@ -206,7 +186,7 @@ void get_sensor_data(){
   
   // It is your job to fill in this method
   // grab data from your accelerometer, GPS, etc...
-  obs(0) = accCorrRaw.x; // some dummy measurement
+  obs(0) = 0; // some dummy measurement
   obs(1) = res1; // some dummy measurement
   
 }
