@@ -138,6 +138,9 @@ dado esto se deja de lado la idea por motivos de tiempos y efectividad. Se pasa 
 Para los giros se seguirá usando el IMU con el giróscopo como forma de analizar los giros hacia un lado u otro. El encoder proporcionara distancias recorridas lo cual al complementarlo sería más efectivo y fácil de implementar.
 Hay que analizar si utilizarlo en una rueda de carro de tamaño real adaptandolo al eje o si será necesario el hecho de utilizar un carro a escala. 
 
+miercoles 01/11
+Se probaron conexiones y un código para el encoder rotativo, se consigue ver la los giros y se llega a la conclusión de que una vuelta completa equivale al valor 40 impreso por el serial Monitor, queda pendiente ver puesto en una rueda la equivalencia a un metro de las vueltas que se le da al encoder.
+
 LINKS
 
 
