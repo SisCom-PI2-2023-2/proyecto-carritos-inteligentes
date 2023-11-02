@@ -18,18 +18,18 @@
    pinMode (D3, INPUT_PULLUP);
    
    Serial.begin (9600);
-   // Lee el estado inicial de la salida A
+   // Lee el estado inicial de la salida A (D1)
    estadoPrevioA = digitalRead(D1);   
  } 
  void loop() 
  {
-   // Lee el estado de la salida A
+   // Lee el estado de la salida A (D1)
    estadoA = digitalRead(D1);
-   // Si el estado previo de la salida A era otro
+   // Si el estado previo de la salida A (D1) era otro
    // significa que se ha producido un pulso
    if (estadoA != estadoPrevioA){     
-     // Si el estado de salida B es diferente del estado
-     // de salida A el codificador esta girando a la derecha
+     // Si el estado de salida B (D2) es diferente del estado
+     // de salida A (D1) el codificador esta girando a la derecha
      if (digitalRead(D2) != estadoA) { 
        contador ++;
      } else {
