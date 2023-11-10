@@ -6,7 +6,13 @@
 #include <PubSubClient.h> // Biblioteca para generar la conexión MQTT con un servidor (Ej.: ThingsBoard)
 #include <ArduinoJson.h>  // Biblioteca para manejar Json en Arduino
 
- 
+
+
+//MPU
+#include <MPU9250_WE.h>
+#include <Wire.h>
+#define MPU9250_ADDR 0x68
+MPU9250_WE myMPU9250 = MPU9250_WE(MPU9250_ADDR);
 
 
 //========= CONSTANTES =========/
@@ -20,13 +26,13 @@ const char* password = "ORTWiFiIoT";
  
 
 // Host de ThingsBoard
-const char* mqtt_server = "mqtt.thingsboard.cloud";
+const char* mqtt_server = "mqtt.thingsboard.cloud"; 
 const int mqtt_port = 1883;
 
  
 
 // Token del dispositivo en ThingsBoard
-const char* token = "Mg1ks9BiT6v8dt09rcmF";
+const char* token = "QD9y5dc6DIJxBUq5MJX0";
 
  
 
@@ -220,9 +226,37 @@ void setup() {
   client.setServer(mqtt_server, mqtt_port);// Establecer los datos para la conexión MQTT
   client.setCallback(callback);           // Establecer la función del callback para la llegada de mensajes en tópicos suscriptos
 
- 
+
+//MPU
+ Wire.begin();
+  if(!myMPU9250.init()){
+    Serial.println("MPU9250 does not respond");
+  }
+  else{
+    Serial.println("MPU9250 is connected");
+  }
+  Serial.println("Position you MPU9250 flat and don't move it - calibrating...");
+  delay(1000);
+  myMPU9250.autoOffsets();
+  Serial.println("Done!");
+  myMPU9250.setSampleRateDivider(5);
+  myMPU9250.setAccRange(MPU9250_ACC_RANGE_2G);
+  myMPU9250.enableAccDLPF(true);
+  myMPU9250.setAccDLPF(MPU9250_DLPF_6);
+  
 }
 
+//MPU
+unsigned long previousMillis; 
+unsigned long currentMillis;
+const long interval = 100;
+float alpha = 0.9;
+float accY = 0;
+float accY1;
+float velY = 0;
+float velY1;
+float posY1 = 0;
+float hposY = 0;
  
 
 //========= BUCLE PRINCIPAL =========/
@@ -230,6 +264,42 @@ void setup() {
  
 
 void loop() {
+   //MPU
+   currentMillis = millis();
+  
+  long dt = currentMillis - previousMillis ;
+  
+  if (dt >= interval) {
+    previousMillis = currentMillis;
+    xyzFloat accCorrRaw = myMPU9250.getCorrectedAccRawValues();
+
+    accY = accCorrRaw.y*9.8/16384;
+    
+    if(accY<30*9.8/16384 && accY>-30*9.8/16384){
+      accY=0;
+    }
+
+    velY1 = velY;
+    
+    velY = alpha*velY1 + (accY*dt)/1000;
+
+    posY1 = hposY;
+
+    if(velY < 0){
+      velY = 0;
+    }
+
+    hposY = posY1 + (velY*dt)/1000;
+
+    //Serial.print("accY:");
+  //Serial.print(accY);
+  Serial.print("velY:");
+  Serial.print(velY);
+  Serial.print(",hposY:");
+  Serial.print(hposY*100);
+  Serial.println();
+  }
+
 
   // === Conexión e intercambio de mensajes MQTT ===
   if (!client.connected()) {  // Controlar en cada ciclo la conexión con el servidor
@@ -256,8 +326,9 @@ void loop() {
 
     // Publicar los datos en el tópio de telemetría para que el servidor los reciba
     DynamicJsonDocument resp(256);
-    resp["posX"] = random(0,640); //temperature;  //Agrega el dato al Json, ej: "temperature": 21.5
-    resp["posY"] = random(0,366); //humidity;        //Agrega el dato al Json, ej: "humidituy: 75.0
+    resp["posX"] = hposY*200; //temperature;  //Agrega el dato al Json, ej: "temperature": 21.5
+    //resp["posY"] = random(0,366); //humidity;        //Agrega el dato al Json, ej: "humidituy: 75.0
+    resp["posY"] = 70;
     char buffer[256];
     serializeJson(resp, buffer);
     client.publish("v1/devices/me/telemetry", buffer);  // Publica el mensaje de telemetría
