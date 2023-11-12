@@ -5,37 +5,25 @@
 #include <ESP8266WiFi.h>  // Biblioteca para generar la conexión a internet a través de WiFi
 #include <PubSubClient.h> // Biblioteca para generar la conexión MQTT con un servidor (Ej.: ThingsBoard)
 #include <ArduinoJson.h>  // Biblioteca para manejar Json en Arduino
-
-
-
 //MPU
 #include <MPU9250_WE.h>
 #include <Wire.h>
 #define MPU9250_ADDR 0x68
-MPU9250_WE myMPU9250 = MPU9250_WE(MPU9250_ADDR);
+
 
 
 //========= CONSTANTES =========/
-
- 
+MPU9250_WE myMPU9250 = MPU9250_WE(MPU9250_ADDR);
 
 // Credenciales de la red WiFi
 const char* ssid = "HUAWEI-IoT";
 const char* password = "ORTWiFiIoT";
 
- 
-
 // Host de ThingsBoard
 const char* mqtt_server = "mqtt.thingsboard.cloud"; 
 const int mqtt_port = 1883;
-
- 
-
 // Token del dispositivo en ThingsBoard
 const char* token = "QD9y5dc6DIJxBUq5MJX0";
-
- 
-
 // Tipo de sensor
 #define DHTTYPE DHT11 // DHT 11
 #define DHT_PIN 3     // Conexión en PIN D3
@@ -76,36 +64,19 @@ DynamicJsonDocument incoming_message(256);
 
 //========= FUNCIONES =========/
 
- 
-
 // Inicializar la conexión WiFi
 void setup_wifi() {
-
- 
-
   delay(10);
   Serial.println();
   Serial.print("Conectando a: ");
   Serial.println(ssid);
-
- 
-
   WiFi.mode(WIFI_STA); // Declarar la ESP como STATION
   WiFi.begin(ssid, password);
-
- 
-
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
   }
-
- 
-
   randomSeed(micros());
-
- 
-
   Serial.println("");
   Serial.println("¡Conectado!");
   Serial.print("Dirección IP asignada: ");
@@ -217,8 +188,6 @@ void reconnect() {
 
 //========= SETUP =========/
 
- 
-
 void setup() {
   // Conectividad
   Serial.begin(115200);                   // Inicializar conexión Serie para utilizar el Monitor
@@ -244,6 +213,10 @@ void setup() {
   myMPU9250.enableAccDLPF(true);
   myMPU9250.setAccDLPF(MPU9250_DLPF_6);
   
+  myMPU9250.enableGyrDLPF();
+  myMPU9250.setGyrDLPF(MPU9250_DLPF_6);
+  myMPU9250.setSampleRateDivider(99);
+  myMPU9250.setGyrRange(MPU9250_GYRO_RANGE_250);
 }
 
 //MPU
@@ -257,17 +230,24 @@ float velY = 0;
 float velY1;
 float posY1 = 0;
 float hposY = 0;
- 
+ //GYRO
+float thetaZ = 0;
 
 //========= BUCLE PRINCIPAL =========/
-
- 
 
 void loop() {
    //MPU
    currentMillis = millis();
-  
   long dt = currentMillis - previousMillis ;
+
+  xyzFloat gyr = myMPU9250.getGyrValues();
+     if(gyr.z<0.05 && gyr.z>-0.05){
+      gyr.z=0;
+    }
+    thetaZ = thetaZ + ((dt*gyr.z)/1000)*0.0174533;
+    if(thetaZ > 6.283 || thetaZ < -6.283){
+      thetaZ = 0;
+    }
   
   if (dt >= interval) {
     previousMillis = currentMillis;
@@ -291,6 +271,9 @@ void loop() {
 
     hposY = posY1 + (velY*dt)/1000;
 
+    x_m = hposY*cos(thetaZ);
+    y_m = hposY*sin(thetaZ);
+
     //Serial.print("accY:");
   //Serial.print(accY);
   Serial.print("velY:");
@@ -308,7 +291,6 @@ void loop() {
   
   client.loop();              // Controlar si hay mensajes entrantes o para enviar al servidor
 
- 
 
   // === Realizar las tareas asignadas al dispositivo ===
   // En este caso se medirá temperatura y humedad para reportar periódicamente
@@ -318,17 +300,12 @@ void loop() {
   unsigned long now = millis();
   if (now - lastMsg > msgPeriod) {
     lastMsg = now;
-    
-    //temperature = dht.readTemperature();  // Leer la temperatura
-    //humidity = dht.readHumidity();        // Leer la humedad
-
  
 
     // Publicar los datos en el tópio de telemetría para que el servidor los reciba
     DynamicJsonDocument resp(256);
-    resp["posX"] = hposY*200; //temperature;  //Agrega el dato al Json, ej: "temperature": 21.5
-    //resp["posY"] = random(0,366); //humidity;        //Agrega el dato al Json, ej: "humidituy: 75.0
-    resp["posY"] = 70;
+    resp["posX"] = x_m;
+    resp["posY"] = y_m;
     char buffer[256];
     serializeJson(resp, buffer);
     client.publish("v1/devices/me/telemetry", buffer);  // Publica el mensaje de telemetría
