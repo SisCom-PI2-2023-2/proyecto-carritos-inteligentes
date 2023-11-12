@@ -46,7 +46,7 @@ Conseguimos una libreria de un heatmap en javascript para implementarlo en thing
 9/09
 En thingsboard nos familiarizamos con el entorno de desarrollo de widgets e intentamos crear uno propio que utilice gráficos mediante el elemento HTML Canvas, que es lo que utiliza el heatmap simple que conseguimos.
 Hicimos una prueba de concepto en la que logramos dibujar cosas simples en el widget, como una línea o un círculo, y una vez que se logró eso se implementó el código del heatmap en lo que ya se tenía, más una matriz con datos para testearlo. Esta vez si anduvo y por primera vez logramos visualizar un mapa de calor en el widget de thingsboard:
-
+(FOTO 1)
 
 12/09
 Modificación de los tiempos de delay e investigación de la librería de multiwifi para que se conecten de forma más rápida y que sea más factible utilizarla como checkpoint para corregir el error que pueda tener el IMU, se consiguió mejora el tiempo de conexión bajando los tiempos de delay del scan. Se comienza a hacer pruebas básicas de la pantalla lcd. 
@@ -124,7 +124,7 @@ prueba sobre el carrito
 miercoles 25/10
 Implementamos la libería del filtro de kalman. Funcionó bien, jugamos con los parámetros del mismo para conseguir el efecto deseado.
 Calculamos filtros del tiempo discreto para implementarlos y quitar el elemento continuo de la aceleración. Implementamos 3 de ellos, buscando los mejores resultados.
-
+(FOTO 2 y 3)
 
 jueves 26/10
 Intentamos llegar a una posición probando los diferentes filtros y cambiando los parámetros del filtro de kalman.
@@ -140,6 +140,13 @@ Hay que analizar si utilizarlo en una rueda de carro de tamaño real adaptandolo
 
 miercoles 01/11
 Se probaron conexiones y un código para el encoder rotativo, se consigue ver la los giros y se llega a la conclusión de que una vuelta completa equivale al valor 40 impreso por el serial Monitor, queda pendiente ver puesto en una rueda la equivalencia a un metro de las vueltas que se le da al encoder.
+
+martes 07/11
+Se diseñó un filtro simple que cuenta con los pasa-altos para la aceleración y la velocidad. Se hizo la prueba y el error era mucho, se llegó a la conclusión de que es imposible trackear de forma correcta la posición con nuestro IMU. Poniendo un filtro para que solo se tome la velocidad en un sentido si se puede determinar la posición, pero solo si se avanza, no si se retrocede. En este caso el sistema si funciona bien.
+(FOTO 4)
+
+jueves 09/11
+Se hizo la primer prueba de mover el sistema y enviar los datos a la nube que fue exitosa. Trasladamos el sistema (solo en un sentido) y los puntos que se agregan al heatmap de thingsboard se mueven correctamente.
 
 LINKS
 
