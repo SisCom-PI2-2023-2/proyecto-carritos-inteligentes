@@ -232,6 +232,10 @@ float posY1 = 0;
 float hposY = 0;
  //GYRO
 float thetaZ = 0;
+float x_m = 0;
+float y_m = 0;
+float x_m1 = 0;
+float y_m1 = 0;
 
 //========= BUCLE PRINCIPAL =========/
 
@@ -240,7 +244,11 @@ void loop() {
    currentMillis = millis();
   long dt = currentMillis - previousMillis ;
 
-  xyzFloat gyr = myMPU9250.getGyrValues();
+ 
+  if (dt >= interval) {
+    previousMillis = currentMillis;
+
+    xyzFloat gyr = myMPU9250.getGyrValues();
      if(gyr.z<0.05 && gyr.z>-0.05){
       gyr.z=0;
     }
@@ -248,9 +256,7 @@ void loop() {
     if(thetaZ > 6.283 || thetaZ < -6.283){
       thetaZ = 0;
     }
-  
-  if (dt >= interval) {
-    previousMillis = currentMillis;
+    
     xyzFloat accCorrRaw = myMPU9250.getCorrectedAccRawValues();
 
     accY = accCorrRaw.y*9.8/16384;
@@ -263,24 +269,31 @@ void loop() {
     
     velY = alpha*velY1 + (accY*dt)/1000;
 
-    posY1 = hposY;
+    x_m1 = x_m;
+    y_m1 = y_m;
 
     if(velY < 0){
       velY = 0;
     }
 
-    hposY = posY1 + (velY*dt)/1000;
+    x_m = x_m1 + ((velY*dt)/1000)*cos(thetaZ);
+    y_m = y_m1 + ((velY*dt)/1000)*sin(thetaZ);
 
-    x_m = hposY*cos(thetaZ);
-    y_m = hposY*sin(thetaZ);
 
     //Serial.print("accY:");
   //Serial.print(accY);
-  Serial.print("velY:");
-  Serial.print(velY);
-  Serial.print(",hposY:");
-  Serial.print(hposY*100);
+  /*
+  Serial.print("thetaZ:");
+  Serial.print(thetaZ);
+
+  
+  Serial.print(",x_m:");
+  Serial.print(x_m*10);
+  
+  Serial.print(",y_m:");
+  Serial.print(y_m*10);
   Serial.println();
+  */
   }
 
 
@@ -310,8 +323,8 @@ void loop() {
     serializeJson(resp, buffer);
     client.publish("v1/devices/me/telemetry", buffer);  // Publica el mensaje de telemetría
     
-    Serial.print("Publicar mensaje [telemetry]: ");
-    Serial.println(buffer);
+    //Serial.print("Publicar mensaje [telemetry]: ");
+    //Serial.println(buffer);
     
   }
 }
