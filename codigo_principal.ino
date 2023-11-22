@@ -351,14 +351,20 @@ float y_m = 0;
 float x_m1 = 0;
 float y_m1 = 0;
 
-int vec_pos_x [600];
-int vec_pos_y [600];
-int i = 0;
-int j = 0;
+String str_pos_x;
+String str_pos_y;
 
 //========= BUCLE PRINCIPAL =========/
 
 void loop() {
+  //Serial.println("loop");
+  // === Conexión e intercambio de mensajes MQTT ===
+  if (!client.connected()) {  // Controlar en cada ciclo la conexión con el servidor
+    reconnect();              // Y recuperarla en caso de desconexión
+  }
+  
+  client.loop();  // Controlar si hay mensajes entrantes o para enviar al servidor
+
    //MPU
    currentMillis = millis();
   long dt = currentMillis - previousMillis ;
@@ -382,7 +388,6 @@ void loop() {
     
     if(accY<30*9.8/16384 && accY>-30*9.8/16384){
       accY=0;
-      enviarData();
     }
 
     velY1 = velY;
@@ -400,13 +405,17 @@ void loop() {
     
     y_m = y_m1 + ((velY*dt)/1000)*sin(thetaZ);
 
-    vec_pos_x[i] = x_m;
-    vec_pos_y[j] = y_m;
-    i = i+1;
-    j = j+1;
+    if(millis() > 1000){
+      str_pos_x += x_m;
+      str_pos_y += y_m;
+    }
     
-    if(i > 598){
+
+    if(str_pos_x.length() > 32){
       enviarData();
+      Serial.println("Se enviaron los datos");
+      str_pos_x = "";
+      str_pos_y = "";
     }
 
     //Serial.print("accY:");
@@ -415,29 +424,20 @@ void loop() {
   Serial.print("thetaZ:");
   Serial.print(thetaZ);
 */
-  
+
+  /*
   Serial.print("x_m:");
   Serial.print(x_m*10);
   
   Serial.print(",y_m:");
   Serial.print(y_m*10);
   Serial.println();
-  
+  */
   }
 }
 
 void enviarData(){
-  i = 0;
-  j = 0;
   
-
-  // === Conexión e intercambio de mensajes MQTT ===
-  if (!client.connected()) {  // Controlar en cada ciclo la conexión con el servidor
-    reconnect();              // Y recuperarla en caso de desconexión
-  }
-  
-  client.loop();  // Controlar si hay mensajes entrantes o para enviar al servidor
-
   lcd.setCursor(0, 0);
   lcd.print(staticMessage);
 
@@ -447,10 +447,7 @@ void enviarData(){
     posicion = scrollMessage(1, scrollingMessage, posicion, totalColumns);
   }
 
-  // === Conexión e intercambio de mensajes MQTT ===
-  if (!client.connected()) {  // Controlar en cada ciclo la conexión con el servidor
-    reconnect();              // Y recuperarla en caso de desconexión
-  }
+  
   texto1= String(numeroUsuario1);
   texto2= String(numeroCarniceria);
   staticMessage= "num:"+ texto1+" - Act:"+texto2;
@@ -459,13 +456,9 @@ void enviarData(){
   // El control de tiempo se hace con millis para que no sea bloqueante y en "paralelo" completar
   // ciclos del bucle principal
   
-  now = millis();
-  if (now - lastMsg > msgPeriod) {
-    lastMsg = now;
- 
-
     // Publicar los datos en el tópio de telemetría para que el servidor los reciba
-    DynamicJsonDocument resp(256);
+    DynamicJsonDocument resp(20480);
+    
     resp["numeroCarniceria"] = numeroCarniceria;
     resp["numeroUsuario1"] = numeroUsuario1;
     resp["diferencia"] = diferencia; 
@@ -473,17 +466,13 @@ void enviarData(){
     resp["diferencia2"] = diferencia2;  
     resp["turnoUsuario1"] = turnoUsuario1;
     resp["turnoUsuario2"] = turnoUsuario2; 
-    resp["posX"] = x_m;
-    resp["posY"] = y_m;
-    char buffer[256];
+    resp["posX"] = str_pos_x;
+    resp["posY"] = str_pos_y;
+    
+    char buffer[20480];
     serializeJson(resp, buffer);
     client.publish("v1/devices/me/telemetry", buffer);  // Publica el mensaje de telemetría
-    
+    //Serial.println("Se enviaron los datos");
     //Serial.print("Publicar mensaje [telemetry]: ");
     //Serial.println(buffer);
-    
-  }  
-  vec_pos_x [600];
-  vec_pos_y [600];
-  
 }
