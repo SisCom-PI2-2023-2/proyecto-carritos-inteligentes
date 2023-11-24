@@ -10,7 +10,7 @@
 #include <MPU9250_WE.h>
 #include <Wire.h>
 #define MPU9250_ADDR 0x68
-
+const int pinBuzzer = 14;
 
 
 //========= CONSTANTES =========/
@@ -90,11 +90,11 @@ DynamicJsonDocument incoming_message(256);
 // Inicializar la conexión WiFi
 void setup_wifi() {
   delay(10);
-  /*
+  
   Serial.println();
   Serial.print("Conectando a: ");
   Serial.println(ssid);
-  */
+  
   WiFi.mode(WIFI_STA); // Declarar la ESP como STATION
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED) {
@@ -102,12 +102,12 @@ void setup_wifi() {
     //Serial.print(".");
   }
   randomSeed(micros());
-  /*
+  
   Serial.println("");
   Serial.println("¡Conectado!");
   Serial.print("Dirección IP asignada: ");
   Serial.println(WiFi.localIP());
-  */
+  
 }
 
  
@@ -118,15 +118,15 @@ void setup_wifi() {
 void callback(char* topic, byte* payload, unsigned int length) {
  
   // Log en Monitor Serie
-  /*
+  
   Serial.print("Mensaje recibido [");
   Serial.print(topic);
   Serial.print("]: ");
-  */
+  
   for (int i = 0; i < length; i++) {
-    //Serial.print((char)payload[i]);
+    Serial.print((char)payload[i]);
   }
-  //Serial.println();
+  Serial.println();
 
  
 
@@ -180,6 +180,35 @@ void callback(char* topic, byte* payload, unsigned int length) {
               numeroCarniceria = numeroCarniceria+1;
               diferencia=numeroUsuario1-numeroCarniceria;
               diferencia2=numeroUsuario2-numeroCarniceria;
+              if(diferencia==3){
+                digitalWrite(pinBuzzer, HIGH);
+                delay(250);
+                digitalWrite(pinBuzzer, LOW);
+                delay(250);
+                digitalWrite(pinBuzzer, HIGH);
+                delay(250);
+                digitalWrite(pinBuzzer, LOW);
+                delay(250);
+                digitalWrite(pinBuzzer, HIGH);
+                delay(250);
+                digitalWrite(pinBuzzer, LOW);
+                delay(250);
+              }
+              if(diferencia==2){
+                digitalWrite(pinBuzzer, HIGH);
+                delay(250);
+                digitalWrite(pinBuzzer, LOW);
+                delay(250);
+                digitalWrite(pinBuzzer, HIGH);
+                delay(250);
+                digitalWrite(pinBuzzer, LOW);
+                delay(250);
+              }
+              if(diferencia==1){
+                digitalWrite(pinBuzzer, HIGH);
+                delay(1000);
+                digitalWrite(pinBuzzer, LOW);
+              }
               if(diferencia==0){
                 turnoUsuario1=1;
                 }
@@ -204,6 +233,35 @@ void callback(char* topic, byte* payload, unsigned int length) {
               numeroCarniceria = numeroCarniceria+1;
               diferencia=numeroUsuario1-numeroCarniceria;
               diferencia2=numeroUsuario2-numeroCarniceria;
+              if(diferencia==3){
+                digitalWrite(pinBuzzer, HIGH);
+                delay(250);
+                digitalWrite(pinBuzzer, LOW);
+                delay(250);
+                digitalWrite(pinBuzzer, HIGH);
+                delay(250);
+                digitalWrite(pinBuzzer, LOW);
+                delay(250);
+                digitalWrite(pinBuzzer, HIGH);
+                delay(250);
+                digitalWrite(pinBuzzer, LOW);
+                delay(250);
+              }
+              if(diferencia==2){
+                digitalWrite(pinBuzzer, HIGH);
+                delay(250);
+                digitalWrite(pinBuzzer, LOW);
+                delay(250);
+                digitalWrite(pinBuzzer, HIGH);
+                delay(250);
+                digitalWrite(pinBuzzer, LOW);
+                delay(250);
+              }
+              if(diferencia==1){
+                digitalWrite(pinBuzzer, HIGH);
+                delay(1000);
+                digitalWrite(pinBuzzer, LOW);
+              }
               if(diferencia==0){
                 turnoUsuario1=1;
                 }
@@ -262,19 +320,19 @@ void callback(char* topic, byte* payload, unsigned int length) {
 void reconnect() {
   // Bucle hasta lograr la conexión
   while (!client.connected()) {
-    //Serial.print("Intentando conectar MQTT...");
+    Serial.print("Intentando conectar MQTT...");
     if (client.connect("ESP8266", token, token)) {  //Nombre del Device y Token para conectarse
-      //Serial.println("¡Conectado!");
+      Serial.println("¡Conectado!");
       
       // Una vez conectado, suscribirse al tópico para recibir solicitudes RPC
       client.subscribe("v1/devices/me/rpc/request/+");
       
     } else {
-      /*
+      
       Serial.print("Error, rc = ");
       Serial.print(client.state());
       Serial.println("Reintenar en 5 segundos...");
-      */
+      
       // Esperar 5 segundos antes de reintentar
       delay(5000);
       
@@ -296,7 +354,8 @@ void reconnect() {
 //========= SETUP =========/
 
 void setup() {
-
+  pinMode(pinBuzzer, OUTPUT);
+  
   lcd.init();                    
   lcd.backlight();
   
@@ -310,10 +369,10 @@ void setup() {
 //MPU
  Wire.begin();
   if(!myMPU9250.init()){
-    //Serial.println("MPU9250 does not respond");
+    Serial.println("MPU9250 does not respond");
   }
   else{
-    //Serial.println("MPU9250 is connected");
+    Serial.println("MPU9250 is connected");
   }
   //Serial.println("Position you MPU9250 flat and don't move it - calibrating...");
   delay(1000);
@@ -425,9 +484,9 @@ void loop() {
 
     if(str_pos_x.length() > 32){
       enviarData();
-      //Serial.println("Se enviaron los datos");
-      //Serial.println(str_pos_x);
-      //Serial.println(str_pos_y);
+      Serial.println("Se enviaron los datos");
+      Serial.println(str_pos_x);
+      Serial.println(str_pos_y);
       str_pos_x = "";
       str_pos_y = "";
     }
