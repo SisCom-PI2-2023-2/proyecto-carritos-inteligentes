@@ -90,20 +90,24 @@ DynamicJsonDocument incoming_message(256);
 // Inicializar la conexión WiFi
 void setup_wifi() {
   delay(10);
+  /*
   Serial.println();
   Serial.print("Conectando a: ");
   Serial.println(ssid);
+  */
   WiFi.mode(WIFI_STA); // Declarar la ESP como STATION
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
-    Serial.print(".");
+    //Serial.print(".");
   }
   randomSeed(micros());
+  /*
   Serial.println("");
   Serial.println("¡Conectado!");
   Serial.print("Dirección IP asignada: ");
   Serial.println(WiFi.localIP());
+  */
 }
 
  
@@ -114,13 +118,15 @@ void setup_wifi() {
 void callback(char* topic, byte* payload, unsigned int length) {
  
   // Log en Monitor Serie
+  /*
   Serial.print("Mensaje recibido [");
   Serial.print(topic);
   Serial.print("]: ");
+  */
   for (int i = 0; i < length; i++) {
-    Serial.print((char)payload[i]);
+    //Serial.print((char)payload[i]);
   }
-  Serial.println();
+  //Serial.println();
 
  
 
@@ -161,7 +167,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
         if (estado) {
           numeroUsuario1 = turnoLibre;
           turnoLibre=turnoLibre+1;
-           Serial.println(numeroUsuario1);
+           //Serial.println(numeroUsuario1);
            diferencia=numeroUsuario1-numeroCarniceria;
            //TurnoPedidoUsuario1=true;
         } 
@@ -170,7 +176,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
           if (metodo=="carniceriaAvanza"){
             boolean estado = incoming_message["params"];
             if (estado) {
-              Serial.println("SumarCarniceria");
+              //Serial.println("SumarCarniceria");
               numeroCarniceria = numeroCarniceria+1;
               diferencia=numeroUsuario1-numeroCarniceria;
               diferencia2=numeroUsuario2-numeroCarniceria;
@@ -190,11 +196,11 @@ void callback(char* topic, byte* payload, unsigned int length) {
                 turnoUsuario2=0;
                 diferencia2=0;
                 }
-                Serial.println(numeroCarniceria);
+                //Serial.println(numeroCarniceria);
               }
                
             else {
-              Serial.println("SumarCarniceria");
+              //Serial.println("SumarCarniceria");
               numeroCarniceria = numeroCarniceria+1;
               diferencia=numeroUsuario1-numeroCarniceria;
               diferencia2=numeroUsuario2-numeroCarniceria;
@@ -216,13 +222,13 @@ void callback(char* topic, byte* payload, unsigned int length) {
               if (metodo=="Usuario2"){
             boolean estado = incoming_message["params"];
             if (estado ) {
-              Serial.println("SumarCarniceria");
+              //Serial.println("SumarCarniceria");
               numeroUsuario2 = turnoLibre;
               turnoLibre=turnoLibre+1;
               diferencia2=numeroUsuario2-numeroCarniceria;
-               Serial.println(numeroUsuario2);
+               //Serial.println(numeroUsuario2);
             } else {
-              Serial.println("SumarCarniceria");
+              //Serial.println("SumarCarniceria");
               numeroUsuario2 = turnoLibre;
               turnoLibre=turnoLibre+1;
               diferencia2=numeroUsuario2-numeroCarniceria;
@@ -246,8 +252,8 @@ void callback(char* topic, byte* payload, unsigned int length) {
       char buffer[256];
       serializeJson(resp, buffer);
       client.publish("v1/devices/me/attributes", buffer);  //Topico para actualizar atributos
-      Serial.print("Publish message [attribute]: ");
-      Serial.println(buffer);
+      //Serial.print("Publish message [attribute]: ");
+      //Serial.println(buffer);
     }
 
  
@@ -256,18 +262,19 @@ void callback(char* topic, byte* payload, unsigned int length) {
 void reconnect() {
   // Bucle hasta lograr la conexión
   while (!client.connected()) {
-    Serial.print("Intentando conectar MQTT...");
+    //Serial.print("Intentando conectar MQTT...");
     if (client.connect("ESP8266", token, token)) {  //Nombre del Device y Token para conectarse
-      Serial.println("¡Conectado!");
+      //Serial.println("¡Conectado!");
       
       // Una vez conectado, suscribirse al tópico para recibir solicitudes RPC
       client.subscribe("v1/devices/me/rpc/request/+");
       
     } else {
-      
+      /*
       Serial.print("Error, rc = ");
       Serial.print(client.state());
       Serial.println("Reintenar en 5 segundos...");
+      */
       // Esperar 5 segundos antes de reintentar
       delay(5000);
       
@@ -303,15 +310,15 @@ void setup() {
 //MPU
  Wire.begin();
   if(!myMPU9250.init()){
-    Serial.println("MPU9250 does not respond");
+    //Serial.println("MPU9250 does not respond");
   }
   else{
-    Serial.println("MPU9250 is connected");
+    //Serial.println("MPU9250 is connected");
   }
-  Serial.println("Position you MPU9250 flat and don't move it - calibrating...");
+  //Serial.println("Position you MPU9250 flat and don't move it - calibrating...");
   delay(1000);
   myMPU9250.autoOffsets();
-  Serial.println("Done!");
+  //Serial.println("Done!");
   myMPU9250.setSampleRateDivider(5);
   myMPU9250.setAccRange(MPU9250_ACC_RANGE_2G);
   myMPU9250.enableAccDLPF(true);
@@ -353,6 +360,9 @@ float y_m1 = 0;
 
 String str_pos_x;
 String str_pos_y;
+
+unsigned long cuentaAnterior; 
+unsigned long cuentaActual;
 
 //========= BUCLE PRINCIPAL =========/
 
@@ -404,35 +414,23 @@ void loop() {
     x_m = x_m1 + ((velY*dt)/1000)*cos(thetaZ);
     
     y_m = y_m1 + ((velY*dt)/1000)*sin(thetaZ);
-
-    if(millis() > 1000){
-      str_pos_x += x_m;
-      str_pos_y += y_m;
+    
+    cuentaActual = millis();
+    if(cuentaActual - cuentaAnterior >= 1000){
+      cuentaAnterior = cuentaActual;
+      str_pos_x += x_m+5;
+      str_pos_y += y_m+5;
     }
     
 
     if(str_pos_x.length() > 32){
       enviarData();
-      Serial.println("Se enviaron los datos");
+      //Serial.println("Se enviaron los datos");
+      //Serial.println(str_pos_x);
+      //Serial.println(str_pos_y);
       str_pos_x = "";
       str_pos_y = "";
     }
-
-    //Serial.print("accY:");
-  //Serial.print(accY);
-  /*
-  Serial.print("thetaZ:");
-  Serial.print(thetaZ);
-*/
-
-  /*
-  Serial.print("x_m:");
-  Serial.print(x_m*10);
-  
-  Serial.print(",y_m:");
-  Serial.print(y_m*10);
-  Serial.println();
-  */
   }
 }
 
