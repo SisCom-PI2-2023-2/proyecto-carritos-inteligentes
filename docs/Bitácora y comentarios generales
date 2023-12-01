@@ -54,9 +54,8 @@ Modificación de los tiempos de delay e investigación de la librería de multiw
 14/09
 Se puso una imágen detrás del mapa de calor, y se implementó una función para agregar puntos y calibrar la intensidad de los puntos dependiendo de la cantidad de los mismos.
 
-
-
-ALGUNAS CLASES FRUSTRADAS SIN AVANCES 
+18/09
+Clase frustada sin avances 
 
 21/09
 Se programó y configuró el widget de thingsboard para que pueda tomar datos enviados en MQTT y en nuestro caso, sean coordenadas que se utilizarían para agregar nuevos puntos al mapa de calor. Aún no se logró el objetivo.
@@ -147,6 +146,20 @@ Se diseñó un filtro simple que cuenta con los pasa-altos para la aceleración 
 
 jueves 09/11
 Se hizo la primer prueba de mover el sistema y enviar los datos a la nube que fue exitosa. Trasladamos el sistema (solo en un sentido) y los puntos que se agregan al heatmap de thingsboard se mueven correctamente.
+
+Martes 13/11
+
+
+Jueves 16/11
+Al momento de revisar los codigos para realizar la integracion de los mismo en uno solo nos dimos cuenta de que la placa principal esp8266 no podia conectarse a dos wifis a la vez y no podiamos desconectarla y conectarla ya que era esta conexion la que enviaba los datos al thingdboard, se comenzo a buscar una solucion, la idea que se considero correcta para proceder fue la de utilizar otra placa, una esp01 en este caso, que esta fuera la encargada de conectarse a los token de wifi.
+
+
+Martes 20/11
+Empezamos explorando diferentes posibilidades de como enviar datos de una placa a la otra, la primera idea que surgio fue trabajar con software serial, crear mediente codigo un nuevo puerto serie que transmita los datos hacie la otra placa y esta pueda leerlos para luego procesarlos, aunque despues de repetidos intentos nos dimos cuenta que este no era el camino, por lo que decidimos encarar el problema de una manera mas simpple, que surgio luego de un analisis de los puertos de nuestra placa principal, utilizando los otros puertos seriales que posee la placa esp8266 conectandoloscruzados con los de nuestra receptora.
+
+
+Jueves 23/11
+se logro de forma exitosa el envio de datos de una placa a la otra y los mismo pudieron ser procesados sin problemas.
 
 LINKS
 
