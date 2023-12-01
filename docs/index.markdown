@@ -6,10 +6,16 @@ layout: home
 ---
 Esta es la página principal. La pueden ajustar a su gusto usando [markdown](https://www.markdownguide.org/basic-syntax/)
 
-## Ejemplo
+## Quienes Somos
+Bienvenido a OptiShop, líderes en la transformación de la experiencia de compra en supermercados. Nos dedicamos a desarrollar soluciones innovadoras que abordan los desafíos comunes que los consumidores enfrentan al realizar sus compras diarias.
 
-Así se agrega una imagen. En general se guardan en la carpeta `assets`:
+## Nuestra Misión
+En OptiShop, nos enorgullece abordar los problemas actuales en las compras de supermercado mediante la implementación de tecnologías avanzadas y enfoques inteligentes. Nuestra misión es proporcionar a los usuarios una experiencia de compra más eficiente, agradable y personalizada, utilizando soluciones que marcan la pauta en la industria.
 
+## Nuestro Porducto
+Nos especializamos en el desarrollo de carritos inteligentes para supermercados, integrando tecnología de vanguardia para optimizar la distribución de productos, ofrecer promociones personalizadas y agilizar el proceso de servicio en los mostradores. Con un equipo dedicado y una visión clara, estamos dando forma al futuro de las compras minoristas.
+
+## IMAGEN
 ![foto-terminada](/assets/foto-terminada.jpg)
 
 
