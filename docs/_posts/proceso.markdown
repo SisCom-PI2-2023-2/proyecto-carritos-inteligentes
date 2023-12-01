@@ -1,0 +1,154 @@
+---
+layout: page
+title: Proceso
+permalink: /proceso/
+theme: cerulean
+---
+
+## Bitácora del proyecto
+
+##### A lo largo del proceso de creación del proyecto se han documentado los procesos y avances realizados día a día
+
+7 - 9  de setiembre
+Trabajo con el programador de ESP-01 para conseguir hacer que funcione como punto de acceso wifi.
+
+En thingsboard nos familiarizamos con el entorno de desarrollo de widgets e intentamos crear uno propio que utilice gráficos mediante el elemento HTML Canvas. Se implementó el código de simpleheat, una librería de Mourner en lo que ya se tenía, más una matriz con datos para testearlo. Por primera vez logramos visualizar un mapa de calor en el widget de thingsboard:
+![mtstmichel](/assets/foto1-bitacora.jpg)
+
+12 - 14  de setiembre
+Modificación de los tiempos de delay e investigación de la librería de multiwifi para que se conecten de forma más rápida y que sea más factible utilizarla como checkpoint para corregir el error que pueda tener el IMU, se consiguió mejora el tiempo de conexión. Se comienza a hacer pruebas básicas de la pantalla lcd. 
+Personalización del mapa de calor, agregado de imagen.
+
+
+21/09
+Se programó y configuró el widget de thingsboard para que pueda tomar datos enviados en MQTT y en nuestro caso, sean coordenadas que se utilizarían para agregar nuevos puntos al mapa de calor. Aún no se logró el objetivo.
+
+
+Trabajo de IMU descubrimos que la biblioteca correcta que había que utilizar es MPU9250_WE y se consiguió la correcta ejecución de un código de calibración y lectura de datos, previamente había problemas de conexión I2C debido al error de la biblioteca que no era la correcta.
+
+26/09
+Se consiguió programar la placa para enviar paquetes con coordenadas random a thingsboard, y que nuestro widget agregue los puntos al mapa de calor a medida que le llegan los paquetes, y lo mismo se visualice en un dashboard.
+
+Pruebas de calibración de IMU y recolección de datos de aceleración, comenzamos a trabajar en un código de doble integración para poder convertir la aceleración en velocidad y luego en posición. 
+
+También cambiamos de IDE de arduino IDE a Platformio. 
+
+
+28/09
+Cambio de imagen en el mapa de calor, se diseñó el plano del salón en donde se hará la prueba del proyecto, para implementar una función dentro del widget, que permite que no se agreguen puntos sobre las “góndolas” y fuera del salón, las cuales llamamos zonas prohibidas.
+
+
+Continuamos con el trabajo del código de la integración para conseguir la posición se avanzó y estamos relativamente cerca de poder conseguir correctamente la posición, para luego comenzar a mezclar con las placas que actuarán como checkpoint. 
+
+
+03/10
+Seguimos trabajando con el IMU se detectaron errores y comenzamos a entrar a ver más en detalle el funcionamiento probando con los ejemplos de la librería, se descubrió que hace pitch y roll pero no es exactamente lo que se necesita además que utiliza el eje de la aceleración para hacer estos, por lo tanto terminamos en la deducción que lo próximo a tratar es obtener los valores de velocidad angular por parte del giroscopio para integrar obteniendo ángulos en grados y ahí poder trabajar con ángulos y trigonometría para obtener la posición respecto a un punto de origen.
+
+05/10
+Se continúa con la práctica e intento de obtención de valores adecuados a partir de IMU, se tomó la decisión de obtener los valores de giro sobre el plano xy mediante la utilización del giróscopo sin tener en cuenta valores de aceleración por problemas con los ejes y la gravedad si se hacía a partir de la aceleración por lo tanto se usará giróscopo par ángulos de giro y acelerómetro para distancias sobre un mismo eje, para ambos se deberán realizar integrales las cuales generaban problema si se hacían con valores cambiantes por lo tanto se propuso la idea de utilizar ciertos umbrales dentro de los que fluctúan los valores devueltos por el IMU luego de la calibración, por lo tanto si se encuentra dentro de un rango razonable el cual es tan pequeño como para no afectar los datos alrededor de 0, se lo establece en 0. Se continuó haciendo pruebas a ver si con los rangos definidos marca bien valores de aceleración al moverlo. 
+
+10/10
+Se realizaron pruebas sobre la precisión de la signal strenght de los beacons, intentando calcular la distancia de proximidad desde una placa a un beacon. La conclusión fue que no se puede calcular la distancia ni siquiera aproximada, solo se puede detectar cuando la placa en cuestión se encuentra aproximadamente a menos de 1 metro de distancia.
+
+Se continuó con la programación de los beacons, implementando dentro de la función de multiWIFI, un beacon de inicio, y una función que “enciende” el sistema sólo después de pasar cerca del mismo.
+
+
+13/10
+Se consiguió tomar la aceleración del giroscopio e integrar para conseguir el ángulo de giro (expresados en números más grandes, falta normalizar). El sistema funciona bien y es muy acertado, se gira hasta cualquier ángulo y se vuelve a cero de forma correcta. Lo observamos en gráficos.
+
+17/10
+Se normalizaron los valores de ángulo de giro que nos da el giroscopio, se filtraron aceleraciones parásitas que se obtienen cuando el módulo está quieto. 
+
+Jueves 19/10
+Comenzamos a realizar pruebas con el acelerómetro para determinar cual era la mejor forma de obtener la posición del carrito utilizando el IMU, lo primero que probamos fue utilizar los valores de g que ¨siente¨ el dispositivo, pero las conclusiones de este experimento no fueron para nada alentadoras debido a distintos factores, por lo que optamos por utilizar la aceleracion que nos entrega el dispositivo, luego de la programacion necesaria comenzamos las pruebas, despues de analizar los resultados obtenidos nos dimos cuenta que la velocidad nunca volvia a cero, y que el pico de aceleracion positivo no se compensaba con el pico de aceleracion negativo (o viceversa), por lo tanto la velocidad no terminaba de cancelarse y la integral de posicion continuaba integrando aun cuando el carrito estaba quieto.
+
+martes 24/10
+Para solucionar el problema que tuvimos la clase anterior, luego de analizar las graficas llegamos a la conclusion de que podria ser que al no estar considerando el angulo de giro, esto estuviera generando un error en la aceleracion, este podria ser el motivo por el cual los picos de aceleracion no se cancelaban.
+Luego de realizar los calculos obtuvimos
+x= cosӨ.xi - senӨ.yi
+y= senӨ.xi + cosӨ.yi
+siendo xi y yi los ejes del giroscopio y x e y los ejes fijos del supermercado
+Luego de programar el codigo corresponsiente procedimos a realizar las pruebas sobre el carrito, los resultados obtenidos fueron igual de malos que los anteriormente obtenidos.
+Como otra alternativa, luego de analizar las graficas originales del acelerometro, llegamos a la conslusion que solo cuando esta quieto el IMU nos entrega aceleración 0, es tan preciso que en los casos de velocidad constante este no sucede graficamente, por lo tanto procedimos a forzar la velocidad a cero cuando la aceleracion sea cero, esto tampoco fue la solucion ya que en determinados momentos de velocidad constante la velocidad se volvia negativa para llegar a cero, arruinando totalmente las muestras obtenidas, en este punto la grafica de posición llegaba hasta un valor aproximadamente bueno, pero luego comenzaba una regresion (o aumento, dependiendo el caso) que eliminaba totalmente la confiabilidad de este metodo.
+En el final de la clase, conociendo este problema, nos pusimos a investigar otros metodos para realizar esto, encontrando el llamado filtro de kalman, y un posible filtro discreto con ceros y polos.
+Encontramos una librería para implementar el filtro de kalman.
+
+
+
+
+
+
+Retomamos en lo que dejamos la clase anterior, en este 
+aceleracion con angulo
+empezamos filtro de kalman
+prueba sobre el carrito 
+
+miercoles 25/10
+Implementamos la libería del filtro de kalman. Funcionó bien, jugamos con los parámetros del mismo para conseguir el efecto deseado.
+Calculamos filtros del tiempo discreto para implementarlos y quitar el elemento continuo de la aceleración. Implementamos 3 de ellos, buscando los mejores resultados.
+(FOTO 2 y 3)
+
+jueves 26/10
+Intentamos llegar a una posición probando los diferentes filtros y cambiando los parámetros del filtro de kalman.
+En este punto el problema reside en que la velocidad no hace picos y vuelve a 0, sino que vuelve a una continua. Creemos que la solución es también filtrar la continua de la velocidad, por lo que implementamos un filtro para esto, que no funciona, hay que revisar.
+
+
+martes 31/10 
+El día de la fechas lamentamos profundamete el hecho de abandonar la idea del acelerómetro, tras una ardua lucha con el respaldo de gran cantidad de filtros el equipo dio pelea hasta ultimo momento, se diseñaron diversos filtros discretos además de la aplicación del filtro de Kalman.
+pero no hubo forma de que la integración discreta funcionara adecuadamente, se agregará a la documentación la justificación y demostración de que no se consiguió integrar correctamente, se llevó a unidades correctas pero siempre se mantenía integrando sin poder obtener una posición exacta
+dado esto se deja de lado la idea por motivos de tiempos y efectividad. Se pasa a un plan de respaldo que funciona mediante la utilización de un encoder para contar los giros de la ruda y de esta forma obtener la distancia recorrida. 
+Para los giros se seguirá usando el IMU con el giróscopo como forma de analizar los giros hacia un lado u otro. El encoder proporcionara distancias recorridas lo cual al complementarlo sería más efectivo y fácil de implementar.
+Hay que analizar si utilizarlo en una rueda de carro de tamaño real adaptandolo al eje o si será necesario el hecho de utilizar un carro a escala. 
+
+miercoles 01/11
+Se probaron conexiones y un código para el encoder rotativo, se consigue ver la los giros y se llega a la conclusión de que una vuelta completa equivale al valor 40 impreso por el serial Monitor, queda pendiente ver puesto en una rueda la equivalencia a un metro de las vueltas que se le da al encoder.
+
+martes 07/11
+Se diseñó un filtro simple que cuenta con los pasa-altos para la aceleración y la velocidad. Se hizo la prueba y el error era mucho, se llegó a la conclusión de que es imposible trackear de forma correcta la posición con nuestro IMU. Poniendo un filtro para que solo se tome la velocidad en un sentido si se puede determinar la posición, pero solo si se avanza, no si se retrocede. En este caso el sistema si funciona bien.
+(FOTO 4)
+
+jueves 09/11
+Se hizo la primer prueba de mover el sistema y enviar los datos a la nube que fue exitosa. Trasladamos el sistema (solo en un sentido) y los puntos que se agregan al heatmap de thingsboard se mueven correctamente.
+
+Martes 13/11
+
+
+Jueves 16/11
+Al momento de revisar los codigos para realizar la integracion de los mismo en uno solo nos dimos cuenta de que la placa principal esp8266 no podia conectarse a dos wifis a la vez y no podiamos desconectarla y conectarla ya que era esta conexion la que enviaba los datos al thingdboard, se comenzo a buscar una solucion, la idea que se considero correcta para proceder fue la de utilizar otra placa, una esp01 en este caso, que esta fuera la encargada de conectarse a los token de wifi.
+
+
+Martes 20/11
+Empezamos explorando diferentes posibilidades de como enviar datos de una placa a la otra, la primera idea que surgio fue trabajar con software serial, crear mediente codigo un nuevo puerto serie que transmita los datos hacie la otra placa y esta pueda leerlos para luego procesarlos, aunque despues de repetidos intentos nos dimos cuenta que este no era el camino, por lo que decidimos encarar el problema de una manera mas simpple, que surgio luego de un analisis de los puertos de nuestra placa principal, utilizando los otros puertos seriales que posee la placa esp8266 conectandoloscruzados con los de nuestra receptora.
+
+
+Jueves 23/11
+se logro de forma exitosa el envio de datos de una placa a la otra y los mismo pudieron ser procesados sin problemas.
+
+
+
+---
+
+Imagen:
+
+![mtstmichel](/assets/mtstmichel.jpg)
+
+---
+
+Listas
+
+   1. Primer punto
+   2. Segundo punto
+   3. ...
+
+
+   * Lista no ordenada
+   * con muchos puntos
+   * ...
+
+---
+
+Quotes
+
+   > Cita o recuadro
+
+
