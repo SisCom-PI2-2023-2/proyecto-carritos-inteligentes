@@ -14,6 +14,7 @@ img {
 }
 </style>
 
-![Juanfra](/assets/Juanfra.jpg) ![Lucas](/assets/Lucas.jpg) ![Nico](/assets/Nico.jpg)
+![Juanfra](/assets/Juanfra.jpg) 
+![Lucas](/assets/Lucas.jpg) ![Nico](/assets/Nico.jpg)
 
 Pueden poner links y fotos!
