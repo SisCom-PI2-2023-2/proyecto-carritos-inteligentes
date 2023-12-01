@@ -4,6 +4,7 @@ title:  "Proceso del proyecto"
 date:   2023-12-04 21:00:00 -0300
 categories: posts
 ---
+`YEAR-MONTH-DAY-title.markdown`
 
 ## Bitácora del proyecto
 
