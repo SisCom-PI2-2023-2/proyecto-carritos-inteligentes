@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Prueba2
-permalink: /prueba2/
+title: Hardware
+permalink: /Hardware/
 ---
 
