@@ -36,14 +36,17 @@ El MPU-9250 es el módulo estrella. Cuenta con acelerómetro y un giróscopo, qu
 
 ## Buzzer Activo
 ![Buzzer Activo](/assets/BuzzerActivo.jpg)
+
 Es el responsable de las diferentes alarmas. Éste módulo emite diferentes pitidos cuando la placa principal se lo indica. Se usa para advertir sobre nuestro turno en los lugares como la carnicería o fiambrería.
 
 ## Encoder Rotativo
 ![Encoder-Rotativo](/assets/Encoder.jpg)
+
 Proporciona información sobre el sentido del movimiento del sistema. Gracias a esa información, tratamos los datos provistos por el IMU de diferentes maneras, para la correcta obtención de la posición.
 
 ## Pantalla LCD
 ![Pantalla-LCD](/assets/LCD.jpg)
+
 Es nuestra forma de comunicar al cliente. La misma despliega información sobre el turno actual y el turno propio de algun servicio, así como diferentes publicidades u ofertas que varían dependiendo de la zona en la que se encuentre el sistema.
 
 
