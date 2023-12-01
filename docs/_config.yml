@@ -30,9 +30,9 @@ url: "https://siscom-pi2-2023-2.github.io" # the base hostname & protocol for yo
 #github_username:  jekyll
 
 # Build settings
-# remote_theme: jekyll/minima
+remote_theme: jekyll/minima
 # theme: jekyll-agency
-remote_theme: raviriley/agency-jekyll-theme
+# remote_theme: raviriley/agency-jekyll-theme
 ## Edit this if you want to personalize your theme....
 #minima:
 #  skin: solarized
