@@ -5,13 +5,11 @@ permalink: /proceso/
 theme: cerulean
 ---
 
----
-
-Encabezados
-
 # Bitácora del proyecto
 
 #### A lo largo del proyecto se han documentado los procesos y avances realizados día a día
+
+
 
 
 ---
