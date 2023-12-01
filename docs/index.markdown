@@ -4,6 +4,8 @@
 
 layout: home
 ---
+Esta es la página principal. La pueden ajustar a su gusto usando [markdown](https://www.markdownguide.org/basic-syntax/)
+
 ## Quienes Somos
 Bienvenido a OptiShop, líderes en la transformación de la experiencia de compra en supermercados. Nos dedicamos a desarrollar soluciones innovadoras que abordan los desafíos comunes que los consumidores enfrentan al realizar sus compras diarias.
 
@@ -17,6 +19,7 @@ Nos especializamos en el desarrollo de carritos inteligentes para supermercados,
 
 ## Descubre Más
 En esta sección te invitamos a adentrarte en el sitio para concer más sobre nuestra empresa y explorar la esencia de lo que hacemos. Conoce a las mentes detrás de nuestro proyecto, sumérgete en las características clave de nuestro innovador carrito inteligente y sigue nuestrov viaje en su desarrollo. Te abrimos las puertas para que descubras quiénes somos, cómo operamos y cómo estamos dando forma al futuro de las compras en supermercados. ¡Acompáñanos en este viaje de descubrimiento!
+
 
 ## Código incluido
 
