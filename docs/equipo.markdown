@@ -7,7 +7,7 @@ permalink: /equipo/
 ## Información del equipo...
 
  <style>
-  background
+
 img {
     width: 150px;
     height: 200px;
