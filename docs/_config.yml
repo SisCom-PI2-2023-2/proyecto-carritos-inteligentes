@@ -35,8 +35,8 @@ remote_theme: jekyll/minima
 # remote_theme: raviriley/agency-jekyll-theme
 ## Edit this if you want to personalize your theme....
 minima:
-  skin: solarized-light
-#  skin: dark
+#  skin: solarized-light
+  skin: dark
 
 plugins:
   - jekyll-feed
