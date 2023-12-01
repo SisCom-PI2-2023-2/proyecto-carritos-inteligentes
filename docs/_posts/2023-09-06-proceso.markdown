@@ -4,7 +4,7 @@ title:  "Poceso"
 date:   2023-09-06 14:14:20 -0300
 categories: posts
 ---
-Los posts se guardan en el directorio `_posts`. Agregando posts aquí (y editando este también) respetando el formato pueden hacer la bitácora del proyecto.
+
 
 `YEAR-MONTH-DAY-title.markdown`
 
@@ -14,29 +14,27 @@ Los posts se guardan en el directorio `_posts`. Agregando posts aquí (y editand
 
 
 15/08
-Planteamiento del problema y desarrollo de ideas 
+Comienzo del proyecto, planteamiento del problema y desarrollo de ideas 
 
 17/08
 Decisión de la idea de los carros inteligentes en supermercados.
-Planteamos las ideas principales para lo que es obligatorio utilizar, utilización de sensores para la localización y creación de mapas de calor que aporten información sobre las zonas más visitadas y la utilización en principio de una pantalla como actuador que también tome datos de la ubicación para poder mostrar ofertas de la determinada zona o publicidades de los productos. 
+Se plantearon las ideas principales para saber que se necesita: sensores para la localización y creación de mapas de calor que aporten información sobre las zonas más visitadas y la utilización de una pantalla como actuador que también tome datos de la ubicación, para poder mostrar ofertas de la determinada zona o publicidades de los productos. 
 
 Luego de desarrollar y tener correctamente planteadas estas ideas se planea extender el proyecto agregando sensores y actuadores que aporten otras cosas. Como detección de productos dentro del carro. 
-
-Se está buscando una solución de localización que sea aplicable en tiempo real para aprovecharla mejor y poder agregar más cosas.(Posiblemente Beacon BLE es la mejor opción o acelerómetro y giroscopio)
+Se está buscando una solución de localización que sea aplicable en tiempo real para aprovecharla mejor y poder agregar más cosas.(Se concluye que posiblemente Beacon BLE es la mejor opción o acelerómetro y giroscopio).
 
 24/08
-Discusión y comienzo básico del documento del anteproyecto 
+Discusión y comienzo básico del documento del anteproyecto.
 
 29/08
-Formalización del documento, nuevas propuestas e ideas sobre la localización utilizando más placas para enviar señales wifi que nos ayuden para la detección en el interior, se realizarán pruebas con ayuda de los profesores de una conexión con ESP 01 (?) y el programador para ver si podemos chequear que la idea sea funcional y pueda servir para localizar correctamente. Para esto se realizaron investigaciones sobre cómo utilizar las placas como con wifi.
+Formalización del documento, nuevas propuestas e ideas sobre la localización utilizando más placas para enviar señales wifi que ayuden para la detección en el interior, se realizarán pruebas con ayuda de los profesores de una conexión con ESP 01 y el programador para saber si se puede chequear que la idea sea funcional y pueda servir para localizar correctamente. Para esto se realizaron investigaciones sobre cómo utilizar las placas como wifi.
 
-Luego de realizar las pruebas de conectar una ESP con otras dos que solo envían la señal wifi se consiguió obtener la señal y también filtrar solo a las ESP que estaban actuando como señales wifi además se reciben los dB de la señal. Se subió el código de estas pruebas a GitHub y comenzamos las discusiones para ver como hacer el pasaje de datos en dB a algún tipo de medición de distancia. 
+Luego de realizar las pruebas de conectar una ESP con otras dos que solo envían la señal wifi se consiguió obtener la señal y también filtrar solo a las ESP que estaban actuando como señales wifi, y además se reciben los dB de la señal. Se subió el código de estas pruebas a GitHub y comenzaron las discusiones para ver como hacer el pasaje de datos en dB a algún tipo de medición de distancia. 
 
-Proponemos y analizamos la idea de hacer el proyecto híbrido en cuanto a la localización de los carros para tener mayor exactitud, se evalúa la idea de utilizar giroscopio y el RSSI como un corrector de los errores del giroscopio para los lugares por lo que se pase para poder reiniciar el giroscopio. 
+Proponemos y analizamos la idea de hacer el proyecto híbrido en cuanto a la localización de los carros para tener mayor exactitud, se evalúa la idea de utilizar giroscopio y el RSSI como un corrector de los errores del giroscopio para los lugares por los que se pase.
 
-El principal problema que aparece con RSSI es que fluctúa demasiado y ante la aparición de muchas redes aparece un problema de retardo ya que demora en escanear los datos y podría actualizarnos nuestros datos pero no ser el lugar en el que realmente esté la persona si es que se estuviera moviendo.
-Solución a esto poner todas las ESP con mismas conexiones y hacer que la ESP del carro se conecte y con este no es necesario el estar escaneando todo el tiempo sino que sería instantáneo la conexión y saber a cual nos conectamos por lo tanto qué tan cerca estamos de esa. 
-
+El principal problema que aparece con RSSI es que fluctúa demasiado y ante la aparición de muchas redes aparece un problema de retardo ya que demora en escanear los datos y podría actualizarse, pero no ser el lugar en el que realmente esté la persona si es que se estuviera moviendo.
+Solución a esto poner todas las ESP con mismas conexiones y hacer que la ESP del carro se conecte y con este no es necesario el estar escaneando todo el tiempo sino que sería instantáneo la conexión y saber a cual nos conectamos por lo tanto qué tan cerca estamos de la misma.
 
 31/08
 Más pruebas de conexión y comunicación de datos con ESP8266 y comienzo de documentación formal del anteproyecto junto a diagrama de gantt.
@@ -53,49 +51,44 @@ Se trabajo en el anteproyecto consultando con los profesores en clase sobre duda
 Se realizo la primera solicitud de compras, adquiriendo el modulo imu y el display a utilizar
 
 7/09
-Trabajamos en código básico de thingsboard e investigación de thingsboard, trabajo con el programador de ESP-01 para conseguir hacer que funcione como punto de acceso wifi.  
-Conseguimos una libreria de un heatmap en javascript para implementarlo en thingsboard. Como no funcionaba conseguimos una más simple y eficiente y tampoco funcionaba.
+Trabajamos en código básico e investigación de thingsboard, trabajo con el programador de ESP-01 para conseguir hacer que funcione como punto de acceso wifi.  
+Se encontró una libreria compleja de un heatmap en javascript para implementarlo en thingsboard. Luego de algunas pruebas no funcionaba, y se consiguió una mas facil como lo es Simpleheat de Mourner. La implementación en thingsboard de la misma da error.
 
 9/09
-En thingsboard nos familiarizamos con el entorno de desarrollo de widgets e intentamos crear uno propio que utilice gráficos mediante el elemento HTML Canvas, que es lo que utiliza el heatmap simple que conseguimos.
-Hicimos una prueba de concepto en la que logramos dibujar cosas simples en el widget, como una línea o un círculo, y una vez que se logró eso se implementó el código del heatmap en lo que ya se tenía, más una matriz con datos para testearlo. Esta vez si anduvo y por primera vez logramos visualizar un mapa de calor en el widget de thingsboard:
-![heatmap-1](/assets/foto1-bitacora.jpg)
+En thingsboard nos familiarizamos con el entorno de desarrollo de widgets e intentamos crear uno propio que utilice gráficos, mediante el elemento HTML Canvas, que es lo que utiliza el simpleheat.
+Se hizo una prueba de concepto en la que se lograron dibujar cosas simples en el widget, como una línea o un círculo, y una vez que se logró eso se implementó el código del heatmap en lo que ya se tenía, más una matriz con datos para testearlo. Esta vez si funcionó, y por primera vez se pudo visualizar un mapa de calor en el widget de thingsboard:
+
+![heatmap-1](docs/assets/foto1-bitacora.jpg)
 
 12/09
-Modificación de los tiempos de delay e investigación de la librería de multiwifi para que se conecten de forma más rápida y que sea más factible utilizarla como checkpoint para corregir el error que pueda tener el IMU, se consiguió mejora el tiempo de conexión bajando los tiempos de delay del scan. Se comienza a hacer pruebas básicas de la pantalla lcd. 
+Modificación de los tiempos de delay e investigación de la librería de multiwifi para que se conecten de forma más rápida y que sea más factible utilizarla como checkpoint para corregir el error que pueda tener el IMU, se consiguió mejorar el tiempo de conexión. Se comienza a hacer pruebas básicas de la pantalla lcd. 
 
 14/09
-Se puso una imágen detrás del mapa de calor, y se implementó una función para agregar puntos y calibrar la intensidad de los puntos dependiendo de la cantidad de los mismos.
+Se puso una imágen detrás del mapa de calor, y se implementó una función para agregar puntos y calibrar la intensidad de los puntos dependiendo de la cantidad de los mismos. El widget HEATMAP comienza a tomar forma.
 
 18/09
-Clase frustada sin avances 
+Clase frustada sin avances. En thingsboard se investigó cómo agregar datos tomados de un mensaje MQTT. Se hizo el código necesario y el mismo no tuvo éxito. Por otra parte, en la investigación del módulo IMU no se consigue recibir sus datos de aceleración. Se sigue en la búsqueda de librerías y ejemplos de uso.
 
 21/09
 Se programó y configuró el widget de thingsboard para que pueda tomar datos enviados en MQTT y en nuestro caso, sean coordenadas que se utilizarían para agregar nuevos puntos al mapa de calor. Aún no se logró el objetivo.
-
-
-Trabajo de IMU descubrimos que la biblioteca correcta que había que utilizar es MPU9250_WE y se consiguió la correcta ejecución de un código de calibración y lectura de datos, previamente había problemas de conexión I2C debido al error de la biblioteca que no era la correcta.
+Trabajo de IMU se descubrió una bibilioteca útil llamada MPU9250_WE y se consiguió la correcta ejecución de un código de calibración y lectura de datos, previamente había problemas de conexión I2C debido al error de la biblioteca que no era la correcta.
 
 26/09
 Se consiguió programar la placa para enviar paquetes con coordenadas random a thingsboard, y que nuestro widget agregue los puntos al mapa de calor a medida que le llegan los paquetes, y lo mismo se visualice en un dashboard.
 
-Pruebas de calibración de IMU y recolección de datos de aceleración, comenzamos a trabajar en un código de doble integración para poder convertir la aceleración en velocidad y luego en posición. 
-
-También cambiamos de IDE de arduino IDE a Platformio. 
+Pruebas de calibración de IMU y recolección de datos de aceleración, se comienza a trabajar en un código de doble integración para poder convertir la aceleración en velocidad y luego en posición. 
 
 
 28/09
 Cambio de imagen en el mapa de calor, se diseñó el plano del salón en donde se hará la prueba del proyecto, para implementar una función dentro del widget, que permite que no se agreguen puntos sobre las “góndolas” y fuera del salón, las cuales llamamos zonas prohibidas.
 
-
-Continuamos con el trabajo del código de la integración para conseguir la posición se avanzó y estamos relativamente cerca de poder conseguir correctamente la posición, para luego comenzar a mezclar con las placas que actuarán como checkpoint. 
-
+Se continúa con el trabajo del código de la integración para conseguir la posición se avanzó y el equipo se encuentra cerca de poder conseguir correctamente la posición, para luego comenzar a mezclar con las placas que actuarán como checkpoint. 
 
 03/10
-Seguimos trabajando con el IMU se detectaron errores y comenzamos a entrar a ver más en detalle el funcionamiento probando con los ejemplos de la librería, se descubrió que hace pitch y roll pero no es exactamente lo que se necesita además que utiliza el eje de la aceleración para hacer estos, por lo tanto terminamos en la deducción que lo próximo a tratar es obtener los valores de velocidad angular por parte del giroscopio para integrar obteniendo ángulos en grados y ahí poder trabajar con ángulos y trigonometría para obtener la posición respecto a un punto de origen.
+Se sigue trabajando con el IMU. Se detectaron errores y se comienza a entrar a ver más en detalle el funcionamiento probando con los ejemplos de la librería, se descubrió que hace pitch y roll, pero no es exactamente lo que se necesita además que utiliza el eje de la aceleración para hacer estos, por lo tanto se deduce que lo próximo a tratar es obtener los valores de velocidad angular por parte del giroscopio para integrar obteniendo ángulos en grados, y poder trabajarlos con trigonometría para obtener la posición respecto a un punto de origen.
 
 05/10
-Se continúa con la práctica e intento de obtención de valores adecuados a partir de IMU, se tomó la decisión de obtener los valores de giro sobre el plano xy mediante la utilización del giróscopo sin tener en cuenta valores de aceleración por problemas con los ejes y la gravedad si se hacía a partir de la aceleración por lo tanto se usará giróscopo par ángulos de giro y acelerómetro para distancias sobre un mismo eje, para ambos se deberán realizar integrales las cuales generaban problema si se hacían con valores cambiantes por lo tanto se propuso la idea de utilizar ciertos umbrales dentro de los que fluctúan los valores devueltos por el IMU luego de la calibración, por lo tanto si se encuentra dentro de un rango razonable el cual es tan pequeño como para no afectar los datos alrededor de 0, se lo establece en 0. Se continuó haciendo pruebas a ver si con los rangos definidos marca bien valores de aceleración al moverlo. 
+Se continúa con la práctica e intento de obtención de valores adecuados a partir de IMU, se tomó la decisión de obtener los valores de giro sobre el plano xy mediante la utilización del giróscopo sin tener en cuenta valores de aceleración por problemas con los ejes y la gravedad. si se hacía a partir de la aceleración por lo tanto se usará giróscopo par ángulos de giro y acelerómetro para distancias sobre un mismo eje, para ambos se deberán realizar integrales las cuales generaban problema si se hacían con valores cambiantes por lo tanto se propuso la idea de utilizar ciertos umbrales dentro de los que fluctúan los valores devueltos por el IMU luego de la calibración, por lo tanto si se encuentra dentro de un rango razonable el cual es tan pequeño como para no afectar los datos alrededor de 0, se lo establece en 0. Se continuó haciendo pruebas a ver si con los rangos definidos marca bien valores de aceleración al moverlo. 
 
 10/10
 Se realizaron pruebas sobre la precisión de la signal strenght de los beacons, intentando calcular la distancia de proximidad desde una placa a un beacon. La conclusión fue que no se puede calcular la distancia ni siquiera aproximada, solo se puede detectar cuando la placa en cuestión se encuentra aproximadamente a menos de 1 metro de distancia.
