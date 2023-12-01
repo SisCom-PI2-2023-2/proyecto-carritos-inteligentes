@@ -2,6 +2,7 @@
 layout: page
 title: Prueba
 permalink: /prueba/
+theme: cerulean
 ---
 
 ## Página de prueba
