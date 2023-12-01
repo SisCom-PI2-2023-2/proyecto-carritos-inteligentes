@@ -9,7 +9,7 @@ permalink: /equipo/
  <style>
 img {
     width: 150px;
-    height: 150px;
+    height: 200px;
 }
 </style>
 
@@ -17,6 +17,7 @@ img {
 
 ![Lucas](/assets/Lucas.jpg)
 
+![Nico](/assets/Nico.jpg)
 
 
 Pueden poner links y fotos!
