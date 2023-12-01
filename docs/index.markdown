@@ -14,6 +14,13 @@ En OptiShop, nos enorgullece abordar los problemas actuales en las compras de su
 
 ## Nuestro Porducto
 Nos especializamos en el desarrollo de carritos inteligentes para supermercados, integrando tecnología de vanguardia para optimizar la distribución de productos, ofrecer promociones personalizadas y agilizar el proceso de servicio en los mostradores. Con un equipo dedicado y una visión clara, estamos dando forma al futuro de las compras minoristas.
+ <style>
+
+img {
+    width: 400px;
+    height: 400px;
+}
+</style>
 
 ![foto-terminada](/assets/foto-terminada.jpg)
 
