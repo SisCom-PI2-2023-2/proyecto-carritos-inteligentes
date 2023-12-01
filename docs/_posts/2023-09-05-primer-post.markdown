@@ -29,3 +29,5 @@ PubSubClient client(espClient);
 E imágenes así:
 
 ![esp8266](https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/NodeMCU_DEVKIT_1.0.jpg/2880px-NodeMCU_DEVKIT_1.0.jpg)
+
+![Juanfra](/assets/Juanfra.jpg) 
