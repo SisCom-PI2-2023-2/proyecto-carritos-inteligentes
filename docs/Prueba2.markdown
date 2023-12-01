@@ -1,6 +1,6 @@
 ---
 layout: page
 title: Prueba2
-permalink: /equipo/
+permalink: /prueba2/
 ---
 
