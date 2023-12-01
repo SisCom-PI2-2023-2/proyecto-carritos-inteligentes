@@ -66,7 +66,7 @@ img {
 </style>
 
 ![foto1-bitacora](/assetsPosts/foto1-bitacora.jpg)
-![esp8266](https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/NodeMCU_DEVKIT_1.0.jpg/2880px-NodeMCU_DEVKIT_1.0.jpg)
+
 
 12/09
 Modificación de los tiempos de delay e investigación de la librería de multiwifi para que se conecten de forma más rápida y que sea más factible utilizarla como checkpoint para corregir el error que pueda tener el IMU, se consiguió mejorar el tiempo de conexión. Se comienza a hacer pruebas básicas de la pantalla lcd. 
