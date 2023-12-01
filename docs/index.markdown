@@ -17,8 +17,8 @@ Nos especializamos en el desarrollo de carritos inteligentes para supermercados,
  <style>
 
 img {
-    width: 400px;
-    height: 400px;
+    width: 545.5px;
+    height: 649px;
 }
 </style>
 
