@@ -1,25 +1,18 @@
 ---
 layout: page
-title: Prueba
-permalink: /prueba/
+title: Proceso
+permalink: /proceso/
 theme: cerulean
 ---
-
-## Página de prueba
 
 ---
 
 Encabezados
 
-# Encabezado
+# Bitácora del proyecto
 
-## Encabezado
+#### A lo largo del proyecto se han documentado los procesos y avances realizados día a día
 
-### Encabezado
-
-#### Encabezado
-
-##### Encabezado
 
 ---
 
