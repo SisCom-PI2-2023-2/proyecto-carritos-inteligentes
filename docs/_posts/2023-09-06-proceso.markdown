@@ -66,7 +66,7 @@ img {
 </style>
 
 ![foto1-bitacora](/assetsPosts/foto1-bitacora.jpg)
-![foto1-bitacora](https://drive.google.com/file/d/1QYr6zyDdPeGMUEh374b9vV3SxYWVzaht/view?usp=drive_link.jpg)
+![foto1-bitacora](https://drive.google.com/file/d/1QYr6zyDdPeGMUEh374b9vV3SxYWVzaht/view?usp=drive_link)
 
 12/09
 Modificación de los tiempos de delay e investigación de la librería de multiwifi para que se conecten de forma más rápida y que sea más factible utilizarla como checkpoint para corregir el error que pueda tener el IMU, se consiguió mejorar el tiempo de conexión. Se comienza a hacer pruebas básicas de la pantalla lcd. 
