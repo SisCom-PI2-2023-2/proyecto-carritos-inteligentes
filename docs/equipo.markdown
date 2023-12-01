@@ -3,9 +3,6 @@ layout: page
 title: Equipo
 permalink: /equipo/
 ---
-
-## Información del equipo...
-
  <style>
 
 img {
@@ -14,9 +11,9 @@ img {
 }
 </style>
 
-![Juanfra](/assets/Juanfra.jpg) Juan Francisco Pírez, estudiante de ingeniería en electrónica.
+![Juanfra](/assets/Juanfra.jpg) Juan Francisco Pírez, estudiante de ingeniería en electrónica. Leader en DCA (Creative Art Department). Programador y diseñador del widget HEATMAP©. Impulsa las capacidades creativas del equipo con comida.
 
-![Lucas](/assets/Lucas.jpg) Lucas Martínez, estudiante de ingenría en electrónica.
+![Lucas](/assets/Lucas.jpg) Lucas Martínez, estudiante de ingenría en electrónica. 
 
 ![Nico](/assets/Nico.jpg) Nicolas Ciappesoni, estudiante de ingeniería en electrónica.
 
