@@ -170,6 +170,6 @@ se logro de forma exitosa el envio de datos de una placa a la otra y los mismo p
 
 Quotes
 
-   > Cita o recuadro
+   
 
 
