@@ -6,7 +6,7 @@ layout: home
 ---
 
 <img src="/assets/optishoplogo.jpg" width="700" height="100">
-![optishop logo](/assets/optishop logo.jpg)
+![optishop logo](/assets/optishoplogo.jpg)
 
 
 ## Quienes Somos
