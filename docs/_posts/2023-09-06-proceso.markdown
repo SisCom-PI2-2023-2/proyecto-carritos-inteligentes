@@ -59,8 +59,6 @@ En thingsboard nos familiarizamos con el entorno de desarrollo de widgets e inte
 Se hizo una prueba de concepto en la que se lograron dibujar cosas simples en el widget, como una línea o un círculo, y una vez que se logró eso se implementó el código del heatmap en lo que ya se tenía, más una matriz con datos para testearlo. Esta vez si funcionó, y por primera vez se pudo visualizar un mapa de calor en el widget de thingsboard:
 
 
-![foto](/assetsPosts/foto.jpg)
-
 ![foto](https://github.com/SisCom-PI2-2023-2/proyecto-carritos-inteligentes/blob/main/docs/_posts/assetsPosts/foto.jpg)
 
 
