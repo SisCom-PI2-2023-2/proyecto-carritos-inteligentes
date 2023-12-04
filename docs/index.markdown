@@ -4,7 +4,7 @@
 
 layout: home
 ---
-Esta es la página principal. La pueden ajustar a su gusto usando [markdown](https://www.markdownguide.org/basic-syntax/)
+
 
 ## Quienes Somos
 Bienvenido a OptiShop, líderes en la transformación de la experiencia de compra en supermercados. Nos dedicamos a desarrollar soluciones innovadoras que abordan los desafíos comunes que los consumidores enfrentan al realizar sus compras diarias.
