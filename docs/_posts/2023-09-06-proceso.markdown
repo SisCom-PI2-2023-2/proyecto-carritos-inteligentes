@@ -66,8 +66,8 @@ img {
 }
 </style>
 
-![foto1-bitacora](/assetsPosts/foto1-bitacora.jpg)
-
+![foto1-bitacora](./assetsPosts/foto1-bitacora.jpg)
+![ESP8266](/assets/ESP8266.jpg)
 
 
 ###### Martes 12/09
