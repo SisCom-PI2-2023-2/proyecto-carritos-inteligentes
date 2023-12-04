@@ -17,4 +17,3 @@ img {
 
 ![Nico](/assets/Nico.jpg) Nicolas Ciappesoni, estudiante de ingeniería en electrónica.
 
-Pueden poner links y fotos!
