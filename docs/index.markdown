@@ -5,7 +5,14 @@
 layout: home
 ---
 
-<img src="/assets/optishoplogo.jpg" width="700" height="100">
+<style>
+
+img {
+    width: 700px;
+    height: 150px;
+}
+</style>
+
 ![optishop logo](/assets/optishoplogo.jpg)
 
 
