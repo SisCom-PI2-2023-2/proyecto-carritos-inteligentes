@@ -17,3 +17,5 @@ Además, mientras recorremos las instalaciones, podremos ver en la pantalla dife
 
 
 ### Administradores
+Para los administradores del local, el uso solamente reside en entrar a la página donde se encuentra el mapa de calor, para ver las actualizaciones en tiempo real y todos los lugares agregados anteriormente.
+Por otro lado, los responsables de carnicería o fiambrería, también tienen su página propia para avanzar de número con presionar un botón.
