@@ -63,6 +63,7 @@ Se hizo una prueba de concepto en la que se lograron dibujar cosas simples en el
 
 ![foto1-bitacora](/assetsPosts/foto1-bitacora.jpg)
 
+![foto1-bitacora](https://github.com/SisCom-PI2-2023-2/proyecto-carritos-inteligentes/blob/main/docs/_posts/assetsPosts/foto1-bitacora.jpg)
 
 
 ###### Martes 12/09
