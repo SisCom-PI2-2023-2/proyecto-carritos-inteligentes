@@ -1,4 +1,4 @@
-En este post se presentan las diferentes pruebas de concepto realizadas a lo largo del proyecto con el fin de probar cada componente importante por separado. Asegurando su correcta funcionalidad para posteriormente adaptarlos todos para su uso conjunto.
+En la fase inicial de nuestro proyecto, nos sumergimos en el desarrollo individualizado de cada componente, asegurándonos de que funcionara de manera eficiente por separado. Luego de avanzar, decidimos llevar a cabo pruebas de concepto, uniendo estas partes preexistentes para evaluar su rendimiento en conjunto. Esta estrategia nos ha permitido no solo validar el éxito individual de cada elemento, sino también comprender su impacto colectivo. Las pruebas de concepto han revelado valiosas sinergias y oportunidades para mejoras adicionales.
 
 #### Pruebas realizadas para pantalla LCD y checkpoints wifi
 ```c++
@@ -365,3 +365,5 @@ void get_sensor_data(){
   
 }
 ```
+
+
