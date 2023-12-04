@@ -15,5 +15,5 @@ img {
 
 ![Lucas](/assets/Lucas.jpg) Lucas Martínez, estudiante de ingenría en electrónica. Investigador especializado en pines y arquitectura de placas. Responsable de la conectividad WiFi y creación de checkpoints para un desempeño óptimo. Contribuye al rendimiento energético del grupo cebando mate.
 
-![Nico](/assets/Nico.jpg) Nicolas Ciappesoni, estudiante de ingeniería en electrónica.
+![Nico](/assets/Nico.jpg) Nicolas Ciappesoni, estudiante de ingeniería en electrónica. Líder experto en desarrollo de productos y gestión de proyectos, aporta de manera creativa al equipo al incorporar cada partido de fútbol disponible.
 
