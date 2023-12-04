@@ -4,7 +4,7 @@
 
 layout: home
 ---
-
+<style>
 img {
     width: 1250px;
     height: 400px;
