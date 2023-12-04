@@ -1,7 +1,7 @@
 En este post se presentan las diferentes pruebas de concepto realizadas a lo largo del proyecto con el fin de probar cada componente importante por separado. Asegurando su correcta funcionalidad para posteriormente adaptarlos todos para su uso conjunto.
 
 #### Pruebas realizadas para pantalla LCD y checkpoints wifi
-```C++
+```c++
 #include "Wire.h"
 #include "LiquidCrystal_I2C.h"
 
@@ -76,10 +76,10 @@ void loop() {
   }
   delay(500);
 }
-\```
+```
 
 #### Pruebas realizadas para encoder contador de vueltas
-```C++
+```c++
 /*  Codificador rotativo Keyes KY-040
  *  ( KY-007 para algunos vendedores )
  *  Prueba de conteo, direccion y  pulsador
@@ -130,4 +130,4 @@ void loop() {
     delay(100);
   }
 }
-\```
+```
