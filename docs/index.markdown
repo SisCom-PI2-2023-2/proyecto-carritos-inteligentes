@@ -6,14 +6,19 @@ layout: home
 ---
 
 <style>
+    .optishop-logo {
+        width: 700px;
+        height: 150px;
+    }
 
-img {
-    width: 700px;
-    height: 150px;
-}
+    .foto-terminada {
+        width: 545.5px;
+        height: 649px;
+    }
 </style>
 
-![optishop logo](/assets/optishoplogo.jpg)
+![optishop logo](/assets/optishoplogo.jpg){:class="optishop-logo"}
+
 
 
 ## Quienes Somos
@@ -26,13 +31,9 @@ En OptiShop, nos enorgullece abordar los problemas actuales en las compras de su
 Nos especializamos en el desarrollo de carritos inteligentes para supermercados, integrando tecnología de vanguardia para optimizar la distribución de productos, ofrecer promociones personalizadas y agilizar el proceso de servicio en los mostradores. Con un equipo dedicado y una visión clara, estamos dando forma al futuro de las compras minoristas.
  <style>
 
-img {
-    width: 545.5px;
-    height: 649px;
-}
-</style>
 
-![foto-terminada](/assets/foto-terminada.jpg)
+
+![foto-terminada](/assets/foto-terminada.jpg){:class="foto-terminada"}
 
 ## Descubre Más
 En esta sección te invitamos a adentrarte en el sitio para concer más sobre nuestra empresa y explorar la esencia de lo que hacemos. Conoce a las mentes detrás de nuestro proyecto, sumérgete en las características clave de nuestro innovador carrito inteligente y sigue nuestrov viaje en su desarrollo. Te abrimos las puertas para que descubras quiénes somos, cómo operamos y cómo estamos dando forma al futuro de las compras en supermercados. ¡Acompáñanos en este viaje de descubrimiento!
