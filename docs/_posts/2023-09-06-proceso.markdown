@@ -58,13 +58,8 @@ Se encontró una libreria compleja de un heatmap en javascript para implementarl
 En thingsboard nos familiarizamos con el entorno de desarrollo de widgets e intentamos crear uno propio que utilice gráficos, mediante el elemento HTML Canvas, que es lo que utiliza el simpleheat.
 Se hizo una prueba de concepto en la que se lograron dibujar cosas simples en el widget, como una línea o un círculo, y una vez que se logró eso se implementó el código del heatmap en lo que ya se tenía, más una matriz con datos para testearlo. Esta vez si funcionó, y por primera vez se pudo visualizar un mapa de calor en el widget de thingsboard:
 
- <style>
+<img src="/assetsPosts/foto1-bitacora.jpg" alt="foto1-bitacora" style="width:150px; height:200px;">
 
-img {
-    width: 150px;
-    height: 200px;
-}
-</style>
 
 ![foto1-bitacora](./assetsPosts/foto1-bitacora.jpg)
 ![ESP8266](/assets/ESP8266.jpg)
