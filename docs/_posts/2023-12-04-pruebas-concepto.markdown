@@ -1,1 +1,1 @@
-En este post se precentan las diferentes pruebas de concepto realizadas a lo largo del proyecto con el fin de probar cada componente importante por separado. Asegurando su correcta funcionalidad para posteriormente adaptandolos todos juntos para su uso conjunto.
+En este post se presentan las diferentes pruebas de concepto realizadas a lo largo del proyecto con el fin de probar cada componente importante por separado. Asegurando su correcta funcionalidad para posteriormente adaptandolos todos juntos para su uso conjunto.
