@@ -66,7 +66,7 @@ img {
 }
 </style>
 
-![foto1-bitacora](https://drive.google.com/file/d/1QYr6zyDdPeGMUEh374b9vV3SxYWVzaht/view?usp=sharing.jpg)
+![foto1-bitacora](/assetsPosts/foto1-bitacora.jpg)
 
 
 
