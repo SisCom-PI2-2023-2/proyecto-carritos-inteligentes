@@ -5,7 +5,7 @@
 layout: home
 ---
 
-<img src="/assets/optishop logo.jpg" width="600" height="100">
+<img src="/assets/optishoplogo.jpg" width="700" height="100">
 ![optishop logo](/assets/optishop logo.jpg)
 
 
