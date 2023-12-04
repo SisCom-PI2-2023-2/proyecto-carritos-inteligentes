@@ -22,13 +22,6 @@ void setup() {
    LCD.init();
    LCD.backlight();
    
-   //LCD.setCursor(1, 0);
-   //LCD.print("HOLA");
-  
-   //LCD.setCursor(8, 1);
-   //LCD.print("MUNDO");
-
-
      // Don't save WiFi configuration in flash - optional
   WiFi.persistent(false);
 
@@ -65,10 +58,6 @@ void setup() {
 void loop() {
   // Maintain WiFi connection
   if (wifiMulti.run(connectTimeoutMs) == WL_CONNECTED) {
- //   Serial.print("Conectado a: ");
-  //  Serial.print(WiFi.SSID());
-   // Serial.print(" con RSSI: ");
-   // Serial.println(WiFi.RSSI());
     String red = WiFi.SSID();
     if(!connected){
       LCD.clear();
@@ -84,8 +73,61 @@ void loop() {
     }
       LCD.setCursor(1, 1);
       LCD.print("No conectado");
-   // Serial.println("WiFi not connected!");
   }
   delay(500);
+}
+\```
+
+#### Pruebas realizadas para encoder contador de vueltas
+```C++
+/*  Codificador rotativo Keyes KY-040
+ *  ( KY-007 para algunos vendedores )
+ *  Prueba de conteo, direccion y  pulsador
+ *  No se filtra los ruidos de contacto
+ */
+
+#define D1 5
+#define D2 4
+#define D3 0
+
+int contador = 0;
+int estadoA;
+int estadoPrevioA;
+void setup() {
+  pinMode(D1, INPUT);  // pin D1
+  pinMode(D2, INPUT);  // pin D2
+  // el pulsador debe ser polarizado a valor ALTO
+  pinMode(D3, INPUT_PULLUP);
+
+  Serial.begin(9600);
+  // Lee el estado inicial de la salida A (D1)
+  estadoPrevioA = digitalRead(D1);
+}
+void loop() {
+  // Lee el estado de la salida A (D1)
+  estadoA = digitalRead(D1);
+  // Si el estado previo de la salida A (D1) era otro
+  // significa que se ha producido un pulso
+  if (estadoA != estadoPrevioA) {
+    // Si el estado de salida B (D2) es diferente del estado
+    // de salida A (D1) el codificador esta girando a la derecha
+    if (digitalRead(D2) != estadoA) {
+      contador++;
+    } else {
+      contador--; 
+    }
+    Serial.print("Posición: ");
+    Serial.println(contador*0.5105);
+  }
+  // actualiza el estado guardado
+  estadoPrevioA = estadoA;
+
+  //Serial.print(B);
+  if (!digitalRead(D3))  // si se pulsa el D3 su valor va a BAJO
+  {
+    Serial.println("D3 pulsado: Contador a 0");
+    contador = 0;
+    delay(100);
+  }
 }
 \```
