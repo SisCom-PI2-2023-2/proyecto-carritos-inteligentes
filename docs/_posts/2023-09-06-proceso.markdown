@@ -61,6 +61,7 @@ Se hizo una prueba de concepto en la que se lograron dibujar cosas simples en el
 
 ![foto](https://github.com/SisCom-PI2-2023-2/proyecto-carritos-inteligentes/blob/main/docs/_posts/assetsPosts/foto.jpg)
 
+![foto](https://github.com/SisCom-PI2-2023-2/proyecto-carritos-inteligentes/blob/main/docs/_posts/assetsPosts/foto.jpg?raw=true)
 
 ###### Martes 12/09
 Modificación de los tiempos de delay e investigación de la librería de multiwifi para que se conecten de forma más rápida y que sea más factible utilizarla como checkpoint para corregir el error que pueda tener el IMU, se consiguió mejorar el tiempo de conexión. Se comienza a hacer pruebas básicas de la pantalla lcd. 
