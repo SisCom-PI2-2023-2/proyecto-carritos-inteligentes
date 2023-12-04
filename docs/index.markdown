@@ -7,8 +7,8 @@ layout: home
 
 <style>
     .optishop-logo {
-        width: 700px;
-        height: 150px;
+        width: 760px;
+        height: 250px;
     }
 
     .foto-terminada {
@@ -17,7 +17,7 @@ layout: home
     }
 </style>
 
-![optishop logo](/assets/optishoplogo.jpg){:class="optishop-logo"}
+![banneroptishop](/assets/banneroptishop.jpg){:class="optishop-logo"}
 
 
 
