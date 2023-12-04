@@ -4,15 +4,9 @@
 
 layout: home
 ---
-<style>
-img {
-    width: 1250px;
-    height: 400px;
-}
-</style>
 
 ![optishop logo](/assets/optishop logo.jpg)
-
+<img src="/assets/optishop logo.jpg" alt="optishop logo" width="auto" height="auto">
 
 ## Quienes Somos
 Bienvenido a OptiShop, líderes en la transformación de la experiencia de compra en supermercados. Nos dedicamos a desarrollar soluciones innovadoras que abordan los desafíos comunes que los consumidores enfrentan al realizar sus compras diarias.
