@@ -5,6 +5,12 @@
 layout: home
 ---
 
+img {
+    width: 1250px;
+    height: 400px;
+}
+</style>
+
 ![optishop logo](/assets/optishop logo.jpg)
 
 
