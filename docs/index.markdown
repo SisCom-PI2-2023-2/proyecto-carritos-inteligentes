@@ -38,5 +38,5 @@ Nos especializamos en el desarrollo de carritos inteligentes para supermercados,
 En esta sección te invitamos a adentrarte en el sitio para concer más sobre nuestra empresa y explorar la esencia de lo que hacemos. Conoce a las mentes detrás de nuestro proyecto, sumérgete en las características clave de nuestro innovador carrito inteligente y sigue nuestrov viaje en su desarrollo. Te abrimos las puertas para que descubras quiénes somos, cómo operamos y cómo estamos dando forma al futuro de las compras en supermercados. ¡Acompáñanos en este viaje de descubrimiento!
 
 ## Posts
+Te invitamos a adentrarte más a través de nuestros Posts. Conoce el día a día de nuestro equipo con el proyecto de carritos inteligentes. Aquí compartiremos experiencias, lecciones aprendidas y grandes pruebas que nos llevaron desde la idea inicial hasta el producto final que hoy transforma la experiencia de compra.
 
-En la carpeta `_posts`` pueden poner posts para crear la bitácora del proyecto. En el primer post está cómo debe ser el formato para que les quede ordenado.
