@@ -1,7 +1,7 @@
 <style>
    .primerPruebaEncoder{
-      width: 25%
-      height: 25%
+      width: 25%;
+      height: 25%;
    }
    
 </style>
@@ -147,7 +147,7 @@ void loop() {
   }
 }
 ```
-![PrimerPruebaEncoder](https://github.com/SisCom-PI2-2023-2/proyecto-carritos-inteligentes/blob/main/docs/_posts/assetsPosts/PrimerPruebaEncoder.jpg?raw=true){:class=primerPruebaEncoder}
+![PrimerPruebaEncoder](https://github.com/SisCom-PI2-2023-2/proyecto-carritos-inteligentes/blob/main/docs/_posts/assetsPosts/PrimerPruebaEncoder.jpg?raw=true){:class="primerPruebaEncoder"}
 #### Pruebas realizadas para MPU-9250 giroscopio con método integrador incluido
 Esta prueba fue realizada con el fin de probar la exactitud de medición del giroscopio con el método de integración discreta aplicado, para esto se colocó las conexiones de la placa y el MPU-9250 poseedor del giroscopio sobre un carro y se realizó un giro de 90 grados. 
 ```c++
