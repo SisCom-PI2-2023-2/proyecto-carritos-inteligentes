@@ -1,6 +1,7 @@
 En la fase inicial de nuestro proyecto, nos sumergimos en el desarrollo individualizado de cada componente, asegurándonos de que funcionara de manera eficiente por separado. Luego de avanzar, decidimos llevar a cabo pruebas de concepto, uniendo estas partes preexistentes para evaluar su rendimiento en conjunto. Esta estrategia nos ha permitido no solo validar el éxito individual de cada elemento, sino también comprender su impacto colectivo. Las pruebas de concepto han revelado valiosas sinergias y oportunidades para mejoras adicionales.
 
 #### Pruebas realizadas para pantalla LCD y checkpoints wifi
+En esta prueba se pretendió probar el cambio de red a la cual se conectaría la placa principal realizando movimientos en sectores con diversas redes wifi, para esto se utilizó la pantalla LCD como ayuda para poder visualizar la red a la cual esta conectada la placa.
 ```c++
 #include "Wire.h"
 #include "LiquidCrystal_I2C.h"
@@ -77,6 +78,12 @@ void loop() {
   delay(500);
 }
 ```
+
+<video width="320" height="240" controls>
+  <source src="https://github.com/SisCom-PI2-2023-2/proyecto-carritos-inteligentes/raw/main/docs/_posts/assetsPosts/PruebaWifiLCD.mp4" type="video/mp4">
+  Tu navegador no soporta el elemento de video.
+</video>
+
 
 #### Pruebas realizadas para encoder contador de vueltas
 ```c++
