@@ -1,5 +1,5 @@
 <style>
-   .primerPruebaEncoder{
+   img{
       width: 50%;
       height: 50%;
    }
@@ -147,7 +147,7 @@ void loop() {
   }
 }
 ```
-![PrimerPruebaEncoder](https://github.com/SisCom-PI2-2023-2/proyecto-carritos-inteligentes/blob/main/docs/_posts/assetsPosts/PrimerPruebaEncoder.jpg?raw=true){:class="primerPruebaEncoder"}
+![PrimerPruebaEncoder](https://github.com/SisCom-PI2-2023-2/proyecto-carritos-inteligentes/blob/main/docs/_posts/assetsPosts/PrimerPruebaEncoder.jpg?raw=true)
 #### Pruebas realizadas para MPU-9250 giroscopio con método integrador incluido
 Esta prueba fue realizada con el fin de probar la exactitud de medición del giroscopio con el método de integración discreta aplicado, para esto se colocó las conexiones de la placa y el MPU-9250 poseedor del giroscopio sobre un carro y se realizó un giro de 90 grados. 
 ```c++
@@ -251,6 +251,8 @@ void loop() {
   Tu navegador no soporta el elemento de video.
 </video>
 #### Pruebas realizadas para aplicación de Kalman y filtrado
+En esta ocación se realizaron diversas pruebas aplicando el filtrado de Kalman y filtros discretos creados desde cero con fines específicos de nuestro proyecto.
+
 ```c++
 /* 
  * This code is a minimal empty shell.
@@ -387,6 +389,8 @@ void get_sensor_data(){
   
 }
 ```
+![MedicionesMPU](https://github.com/SisCom-PI2-2023-2/proyecto-carritos-inteligentes/blob/main/docs/_posts/assetsPosts/MedicionesMPU.jpg?raw=true)
+
 #### Pruebas realizadas para solicitar número en ThingsBoard y buzzer activo
 ```c++
 //========= BIBLIOTECAS =========/
