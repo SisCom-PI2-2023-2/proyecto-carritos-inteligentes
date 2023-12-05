@@ -1,3 +1,11 @@
+<style>
+   .primerPruebaEncoder{
+      width: 50%
+      height: 50%
+   }
+   
+</style>
+
 En la fase inicial de nuestro proyecto, nos sumergimos en el desarrollo individualizado de cada componente, asegurándonos de que funcionara de manera eficiente por separado. Luego de avanzar, decidimos llevar a cabo pruebas de concepto, uniendo estas partes preexistentes para evaluar su rendimiento en conjunto. Esta estrategia nos ha permitido no solo validar el éxito individual de cada elemento, sino también comprender su impacto colectivo. Las pruebas de concepto han revelado valiosas sinergias y oportunidades para mejoras adicionales.
 
 #### Pruebas realizadas para pantalla LCD y checkpoints wifi
@@ -86,6 +94,7 @@ void loop() {
 
 
 #### Pruebas realizadas para encoder contador de vueltas
+Con esta prueba se pretendía conseguir una relación de las mediciones del encoder con distancias medidas en metros y centímetros. Para esto se creo un artefato que facilitó el agarre del encoder para realizar las mediciones.
 ```c++
 /*  Codificador rotativo Keyes KY-040
  *  ( KY-007 para algunos vendedores )
@@ -138,7 +147,9 @@ void loop() {
   }
 }
 ```
+![PrimerPruebaEncoder](https://github.com/SisCom-PI2-2023-2/proyecto-carritos-inteligentes/blob/main/docs/_posts/assetsPosts/PrimerPruebaEncoder.jpg?raw=true){:class=primerPruebaEncoder}
 #### Pruebas realizadas para MPU-9250 giroscopio con método integrador incluido
+Esta prueba fue realizada con el fin de probar la exactitud de medición del giroscopio con el método de integración discreta aplicado, para esto se colocó las conexiones de la placa y el MPU-9250 poseedor del giroscopio sobre un carro y se realizó un giro de 90 grados. 
 ```c++
 #include <MPU9250_WE.h>
 #include <Wire.h>
@@ -235,6 +246,10 @@ void loop() {
   
 }
 ```
+<video width="320" height="240" controls>
+  <source src="https://github.com/SisCom-PI2-2023-2/proyecto-carritos-inteligentes/raw/main/docs/_posts/assetsPosts/PruebaGiroscopio.mp4" type="video/mp4">
+  Tu navegador no soporta el elemento de video.
+</video>
 #### Pruebas realizadas para aplicación de Kalman y filtrado
 ```c++
 /* 
