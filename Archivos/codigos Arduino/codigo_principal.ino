@@ -17,8 +17,8 @@ const int pinBuzzer = 14;
 MPU9250_WE myMPU9250 = MPU9250_WE(MPU9250_ADDR);
 
 // Credenciales de la red WiFi
-const char* ssid = "HUAWEI-IoT";
-const char* password = "ORTWiFiIoT";
+const char* ssid = "Sofia";
+const char* password = "ff11ff22ff";
 
 // Host de ThingsBoard
 const char* mqtt_server = "mqtt.thingsboard.cloud"; 
@@ -32,6 +32,7 @@ const char* token = "QD9y5dc6DIJxBUq5MJX0";
 #define DHT_PIN 3     // Conexión en PIN D3
 
  
+
 
 
 //========= VARIABLES =========/
@@ -71,7 +72,9 @@ float posX = 0;
 float posY = 0;
 boolean led_state = false;
 
- 
+ //Variables para comunicacion serial
+int incomingByte = 0;
+bool debug = true;
 
 // Mensajes y buffers
 #define MSG_BUFFER_SIZE  (50)
@@ -111,14 +114,21 @@ void setup_wifi() {
 }
 
  
+//LCD
+String texto1;
+String texto2;
 
+String staticMessage;
+String scrollingMessage; 
+String mensaje1 = "Oferta de Hamburguesas, compra 3 y paga 1.       | ";
+String mensaje2 = "Oferta de Alfajores, con la compra de 2 alfajores te llevas un poster de regalo       | ";
+String mensaje3 = "El proyecto no sirve con wifi       | ";
 
 // Función de callback para recepción de mensajes MQTT (Tópicos a los que está suscrita la placa)
 // Se llama cada vez que arriba un mensaje entrante (En este ejemplo la placa se suscribirá al tópico: v1/devices/me/rpc/request/+)
 void callback(char* topic, byte* payload, unsigned int length) {
  
   // Log en Monitor Serie
-  
   Serial.print("Mensaje recibido [");
   Serial.print(topic);
   Serial.print("]: ");
@@ -303,6 +313,19 @@ void callback(char* topic, byte* payload, unsigned int length) {
       }
     }
  
+    lcd.setCursor(0, 0);
+  lcd.print(staticMessage);
+
+  now = millis();
+  if (now - lastScroll > 300) {
+    lastScroll = now;
+    posicion = scrollMessage(1, scrollingMessage, posicion, totalColumns);
+  }
+
+  texto1= String(numeroUsuario1);
+  texto2= String(numeroCarniceria);
+  staticMessage= "num:"+ texto1+" - Act:"+texto2;
+
 
       // Actualizar el atributo relacionado
       DynamicJsonDocument resp(256);
@@ -312,6 +335,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
       client.publish("v1/devices/me/attributes", buffer);  //Topico para actualizar atributos
       //Serial.print("Publish message [attribute]: ");
       //Serial.println(buffer);
+
     }
 
  
@@ -389,15 +413,7 @@ void setup() {
   myMPU9250.setGyrRange(MPU9250_GYRO_RANGE_250);
 }
 
-//LCD
-String texto1;
-String texto2;
 
-String staticMessage;
-String scrollingMessage; 
-String mensaje1 = "Oferta de Hamburguesas, compra 3 y paga 1.       | ";
-String mensaje2 = "Oferta de Alfajores, con la compra de 2 alfajores te llevas un poster de regalo       | ";
-String mensaje3 = "El proyecto no sirve con wifi       | ";
 
 //MPU
 unsigned long previousMillis; 
@@ -426,6 +442,20 @@ unsigned long cuentaActual;
 //========= BUCLE PRINCIPAL =========/
 
 void loop() {
+  if (Serial.available() > 0) {
+    incomingByte = Serial.read();
+    if(incomingByte == 50){
+      lcd.setCursor(0, 1);
+      lcd.print("publcidad");
+    }
+    if(incomingByte == 120){
+      lcd.setCursor(0, 1);
+      lcd.print("no conectado");
+    }
+    if(debug) Serial.print("I received: ");
+    if(debug) Serial.println(incomingByte);
+  }
+
   //Serial.println("loop");
   // === Conexión e intercambio de mensajes MQTT ===
   if (!client.connected()) {  // Controlar en cada ciclo la conexión con el servidor
@@ -495,19 +525,7 @@ void loop() {
 
 void enviarData(){
   
-  lcd.setCursor(0, 0);
-  lcd.print(staticMessage);
-
-  now = millis();
-  if (now - lastScroll > 300) {
-    lastScroll = now;
-    posicion = scrollMessage(1, scrollingMessage, posicion, totalColumns);
-  }
-
   
-  texto1= String(numeroUsuario1);
-  texto2= String(numeroCarniceria);
-  staticMessage= "num:"+ texto1+" - Act:"+texto2;
   // === Realizar las tareas asignadas al dispositivo ===
   // En este caso se medirá temperatura y humedad para reportar periódicamente
   // El control de tiempo se hace con millis para que no sea bloqueante y en "paralelo" completar
