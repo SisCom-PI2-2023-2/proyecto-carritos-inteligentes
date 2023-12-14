@@ -1,7 +1,16 @@
 #include "Wire.h"
 
-
+bool corrigio-b = false;
+bool corrigio-c = false;
+bool corrigio-d = false;
+bool corrigio-e = false;
 bool connected = false;
+
+unsigned long now;
+unsigned long ultimo_cambio_b;
+unsigned long ultimo_cambio_c;
+unsigned long ultimo_cambio_d;
+unsigned long ultimo_cambio_e;
 
 #include <ESP8266WiFiMulti.h>
 
@@ -54,32 +63,40 @@ void loop() {
       connected = true;
     }
     if(red=="esp-wifi-b"){
-         if(miRSSI < 35);{
+         if(miRSSI < 35 && !corrigio-b){
           Serial.println("2");
+          corrigio-b = true;
+          ultimo_cambio_b=millis();
          }
          else{
           Serial.println("b");
          }
     }
    if(red=="esp-wifi-c"){
-         if(miRSSI < 35);{
+         if(miRSSI < 35 && !corrigio-c){
           Serial.println("3");
+          corrigio-c = true;
+              ultimo_cambio_c=millis();
          }
          else{
           Serial.println("c");
          }
     }
    if(red=="esp-wifi-d"){
-         if(miRSSI < 35);{
+         if(miRSSI < 35 && !corrigio-d){
           Serial.println("4");
+          corrigio-d = true;
+          ultimo_cambio_d=millis();
          }
          else{
           Serial.println("d");
          }
     }
    if(red=="esp-wifi-e"){
-         if(miRSSI < 35);{
+         if(miRSSI < 35 && !corrigio-e){
           Serial.println("5");
+          corrigio-e = true;
+          ultimo_cambio_e=millis();
          }
          else{
           Serial.println("d");
@@ -93,4 +110,21 @@ void loop() {
       Serial.println("x");//No conectado
   }
   delay(500);
+     
+     now = millis();
+     if(now - ultimo_cambio_b > 1000 && corrigio-b){
+          corrigio-b=false;
+     }
+     if(now - ultimo_cambio_c > 1000 && corrigio-c){
+          corrigio-c=false;
+     }
+     if(now - ultimo_cambio_d > 1000 && corrigio-d){
+          corrigio-d=false;
+     }
+     if(now - ultimo_cambio_e > 1000 && corrigio-e){
+          corrigio-e=false;
+     }
+     
 }
+
+
