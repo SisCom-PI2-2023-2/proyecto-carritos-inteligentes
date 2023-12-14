@@ -4,7 +4,7 @@ title: Manual de usuario
 permalink: /Manual de usuario/
 ---
 
-¿quere saber como se usa nuestro producto? Lee las guías a continuación y enterate de lo simple y útil de un sistema del futuro, que no cambia la escencia de un sistema clásico, sino que la agiliza.
+¿Queres saber como se usa nuestro producto? Lee las guías a continuación y enterate de lo simple y útil de un sistema del futuro, que no cambia la escencia de un sistema clásico, sino que la agiliza.
 
 ### Usuarios
 Optishop sólo agrega una pantalla con la que se interactúa solo en momentos necesarios.
