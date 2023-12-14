@@ -454,116 +454,130 @@ String str_pos_y;
 unsigned long cuentaAnterior; 
 unsigned long cuentaActual;
 
+bool iniciado = false;
+
 //========= BUCLE PRINCIPAL =========/
 
 void loop() {
-
-  //IMPRIMIR PUBLICIDADES DEPENDIENDO DE QUE NUMERO LLEGUE POR EL MONITOR SERIAL
   if (Serial.available() > 0) {
     incomingByte = Serial.read();
-    if(incomingByte == 50){
-      lcd.setCursor(0, 1);
-      lcd.print("publcidad");
-    }
-    if(incomingByte == 120){
-      lcd.setCursor(0, 1);
-      lcd.print("no conectado");
-    }
-    if(debug) Serial.print("I received: ");
-    if(debug) Serial.println(incomingByte);
-  }
-
-  //ENCODER
-  // Lee el estado de la salida A (D7)
-  estadoA = digitalRead(D7);
-  // Si el estado previo de la salida A (D7) era otro significa que se ha producido un pulso
-  if (estadoA != estadoPrevioA) {
-    // Si el estado de salida B (D8) es diferente del estado de salida A (D7) el codificador esta girando a la derecha
-    if (digitalRead(D8) != estadoA) {
-      adelante = true;
-    } else {
-      adelante = false; 
+    //esp-wifi-b
+    if(incomingByte == 98){
+      iniciado = true;
     }
   }
-  //Actualizo el estado
-  estadoPrevioA = estadoA;
-
-  //Serial.println("loop");
-  // === Conexión e intercambio de mensajes MQTT ===
-  if (!client.connected()) {  // Controlar en cada ciclo la conexión con el servidor
-    reconnect();              // Y recuperarla en caso de desconexión
+  if(!iniciado){
+    serial.print("sistema NO iniciado");
   }
-  
-  client.loop();  // Controlar si hay mensajes entrantes o para enviar al servidor
-
-   //MPU
-   currentMillis = millis();
-  long dt = currentMillis - previousMillis ;
-  if (dt >= interval) {
-    previousMillis = currentMillis;
-
-    xyzFloat gyr = myMPU9250.getGyrValues();
-     if(gyr.z<0.05 && gyr.z>-0.05){
-      gyr.z=0;
-    }
-    thetaZ = thetaZ + ((dt*gyr.z)/1000)*0.0174533;
-    if(thetaZ > 6.283 || thetaZ < -6.283){
-      thetaZ = 0;
-    }
-    
-    xyzFloat accCorrRaw = myMPU9250.getCorrectedAccRawValues();
-    med2 = med1;
-    med1 = accCorrRaw.y*9.8/16384;
-    accY2 = accY;
-    accY = med1 - med2 - 0.9*accY2;
-    
-    if(accY<30*9.8/16384 && accY>-30*9.8/16384){
-      accY=0;
-    }
-
-    velY1 = velY;
-    
-    velY = alpha*velY1 + (accY*dt)/1000;
-
-    x_m1 = x_m;
-    y_m1 = y_m;
-
-    if(adelante){
-      if(velY < 0){
-        velY = 0;
+  if(iniciado){
+    serial.print("sistema iniciado");
+    //IMPRIMIR PUBLICIDADES DEPENDIENDO DE QUE NUMERO LLEGUE POR EL MONITOR SERIAL
+    if (Serial.available() > 0) {
+      incomingByte = Serial.read();
+      //esp-wifi-c
+      if(incomingByte == 99){
+        lcd.setCursor(0, 1);
+        lcd.print("publcidad-c");
+      }
+      //esp-wifi-d
+      if(incomingByte == 100){
+        lcd.setCursor(0, 1);
+        lcd.print("publcidad-d");
+      }
+      //esp-wifi-e
+      if(incomingByte == 101){
+        lcd.setCursor(0, 1);
+        lcd.print("publcidad-e");
+      }
+      if(incomingByte == 120){
+        lcd.setCursor(0, 1);
+        lcd.print("no conectado");
       }
     }
-    if(!adelante){
-      if(velY > 0){
-        velY = 0;
+
+    //ENCODER
+    // Lee el estado de la salida A (D7)
+    estadoA = digitalRead(D7);
+    // Si el estado previo de la salida A (D7) era otro significa que se ha producido un pulso
+    if (estadoA != estadoPrevioA) {
+      // Si el estado de salida B (D8) es diferente del estado de salida A (D7) el codificador esta girando a la derecha
+      if (digitalRead(D8) != estadoA) {
+        adelante = true;
+      } else {
+        adelante = false; 
       }
     }
-    
+    //Actualizo el estado
+    estadoPrevioA = estadoA;
 
-    x_m = x_m1 + ((velY*dt)/1000)*cos(thetaZ);
-    
-    y_m = y_m1 + ((velY*dt)/1000)*sin(thetaZ);
-
-    
-
-    Serial.print("posx:");
-    Serial.print(x_m);
-    Serial.print(",posy:");
-    Serial.println(y_m);
-    Serial.print(adelante);
-    cuentaActual = millis();
-    if(cuentaActual - cuentaAnterior >= 1000){
-      cuentaAnterior = cuentaActual;
-      //hayError(x_m,y_m);
-      str_pos_x += x_m+5;
-      str_pos_y += y_m+5;
+    //Serial.println("loop");
+    // === Conexión e intercambio de mensajes MQTT ===
+    if (!client.connected()) {  // Controlar en cada ciclo la conexión con el servidor
+      reconnect();              // Y recuperarla en caso de desconexión
     }
-    
+    client.loop();  // Controlar si hay mensajes entrantes o para enviar al servidor
 
-    if(str_pos_x.length() > 32){
-      enviarData();
-      str_pos_x = "";
-      str_pos_y = "";
+    //MPU
+    currentMillis = millis();
+    long dt = currentMillis - previousMillis ;
+    if (dt >= interval) {
+      previousMillis = currentMillis;
+
+      xyzFloat gyr = myMPU9250.getGyrValues();
+      if(gyr.z<0.05 && gyr.z>-0.05){
+        gyr.z=0;
+      }
+      thetaZ = thetaZ + ((dt*gyr.z)/1000)*0.0174533;
+      if(thetaZ > 6.283 || thetaZ < -6.283){
+        thetaZ = 0;
+      }
+      
+      xyzFloat accCorrRaw = myMPU9250.getCorrectedAccRawValues();
+      med2 = med1;
+      med1 = accCorrRaw.y*9.8/16384;
+      accY2 = accY;
+      accY = med1 - med2 - 0.9*accY2;
+      
+      if(accY<30*9.8/16384 && accY>-30*9.8/16384){
+        accY=0;
+      }
+
+      velY1 = velY;
+      velY = alpha*velY1 + (accY*dt)/1000;
+      x_m1 = x_m;
+      y_m1 = y_m;
+
+      if(adelante){
+        if(velY < 0){
+          velY = 0;
+        }
+      }
+      if(!adelante){
+        if(velY > 0){
+          velY = 0;
+        }
+      }
+
+      x_m = x_m1 + ((velY*dt)/1000)*cos(thetaZ);
+      y_m = y_m1 + ((velY*dt)/1000)*sin(thetaZ);
+
+      Serial.print("posx:");
+      Serial.print(x_m);
+      Serial.print(",posy:");
+      Serial.println(y_m);
+      Serial.print(adelante);
+      cuentaActual = millis();
+      if(cuentaActual - cuentaAnterior >= 1000){
+        cuentaAnterior = cuentaActual;
+        //hayError(x_m,y_m);
+        str_pos_x += x_m+5;
+        str_pos_y += y_m+5;
+      }
+      if(str_pos_x.length() > 32){
+        enviarData();
+        str_pos_x = "";
+        str_pos_y = "";
+      }
     }
   }
 }
