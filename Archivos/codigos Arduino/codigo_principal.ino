@@ -17,8 +17,8 @@ const int pinBuzzer = 14;
 MPU9250_WE myMPU9250 = MPU9250_WE(MPU9250_ADDR);
 
 // Credenciales de la red WiFi
-const char* ssid = "Sofia";
-const char* password = "ff11ff22ff";
+const char* ssid = "Lucas";
+const char* password = "lucas109";
 
 // Host de ThingsBoard
 const char* mqtt_server = "mqtt.thingsboard.cloud"; 
@@ -32,7 +32,9 @@ const char* token = "QD9y5dc6DIJxBUq5MJX0";
 #define DHT_PIN 3     // Conexión en PIN D3
 
  
-
+// Pines para el encoder
+#define D7 13
+#define D8 15
 
 
 //========= VARIABLES =========/
@@ -86,7 +88,10 @@ char msg2[MSG_BUFFER_SIZE];
 // Objeto Json para recibir mensajes desde el servidor
 DynamicJsonDocument incoming_message(256);
 
- 
+//Variables para el encoder
+bool adelante;
+int estadoA;
+int estadoPrevioA;
 
 //========= FUNCIONES =========/
 
@@ -411,6 +416,13 @@ void setup() {
   myMPU9250.setGyrDLPF(MPU9250_DLPF_6);
   myMPU9250.setSampleRateDivider(99);
   myMPU9250.setGyrRange(MPU9250_GYRO_RANGE_250);
+
+
+  //ENCODER
+  pinMode(D7, INPUT);  // pin D7
+  pinMode(D8, INPUT);  // pin D8
+  // Lee el estado inicial de la salida A (D1)
+  estadoPrevioA = digitalRead(D7);
 }
 
 
@@ -421,6 +433,9 @@ unsigned long currentMillis;
 const long interval = 100;
 float alpha = 0.9;
 float accY = 0;
+float accY2;
+float med1 = 0;
+float med2;
 float accY1;
 float velY = 0;
 float velY1;
@@ -442,6 +457,8 @@ unsigned long cuentaActual;
 //========= BUCLE PRINCIPAL =========/
 
 void loop() {
+
+  //IMPRIMIR PUBLICIDADES DEPENDIENDO DE QUE NUMERO LLEGUE POR EL MONITOR SERIAL
   if (Serial.available() > 0) {
     incomingByte = Serial.read();
     if(incomingByte == 50){
@@ -456,6 +473,21 @@ void loop() {
     if(debug) Serial.println(incomingByte);
   }
 
+  //ENCODER
+  // Lee el estado de la salida A (D7)
+  estadoA = digitalRead(D7);
+  // Si el estado previo de la salida A (D7) era otro significa que se ha producido un pulso
+  if (estadoA != estadoPrevioA) {
+    // Si el estado de salida B (D8) es diferente del estado de salida A (D7) el codificador esta girando a la derecha
+    if (digitalRead(D8) != estadoA) {
+      adelante = true;
+    } else {
+      adelante = false; 
+    }
+  }
+  //Actualizo el estado
+  estadoPrevioA = estadoA;
+
   //Serial.println("loop");
   // === Conexión e intercambio de mensajes MQTT ===
   if (!client.connected()) {  // Controlar en cada ciclo la conexión con el servidor
@@ -467,8 +499,6 @@ void loop() {
    //MPU
    currentMillis = millis();
   long dt = currentMillis - previousMillis ;
-
- 
   if (dt >= interval) {
     previousMillis = currentMillis;
 
@@ -482,8 +512,10 @@ void loop() {
     }
     
     xyzFloat accCorrRaw = myMPU9250.getCorrectedAccRawValues();
-
-    accY = accCorrRaw.y*9.8/16384;
+    med2 = med1;
+    med1 = accCorrRaw.y*9.8/16384;
+    accY2 = accY;
+    accY = med1 - med2 - 0.9*accY2;
     
     if(accY<30*9.8/16384 && accY>-30*9.8/16384){
       accY=0;
@@ -496,17 +528,33 @@ void loop() {
     x_m1 = x_m;
     y_m1 = y_m;
 
-    if(velY < 0){
-      velY = 0;
+    if(adelante){
+      if(velY < 0){
+        velY = 0;
+      }
     }
+    if(!adelante){
+      if(velY > 0){
+        velY = 0;
+      }
+    }
+    
 
     x_m = x_m1 + ((velY*dt)/1000)*cos(thetaZ);
     
     y_m = y_m1 + ((velY*dt)/1000)*sin(thetaZ);
+
     
+
+    Serial.print("posx:");
+    Serial.print(x_m);
+    Serial.print(",posy:");
+    Serial.println(y_m);
+    Serial.print(adelante);
     cuentaActual = millis();
     if(cuentaActual - cuentaAnterior >= 1000){
       cuentaAnterior = cuentaActual;
+      //hayError(x_m,y_m);
       str_pos_x += x_m+5;
       str_pos_y += y_m+5;
     }
@@ -514,13 +562,59 @@ void loop() {
 
     if(str_pos_x.length() > 32){
       enviarData();
-      Serial.println("Se enviaron los datos");
-      Serial.println(str_pos_x);
-      Serial.println(str_pos_y);
       str_pos_x = "";
       str_pos_y = "";
     }
   }
+}
+
+void hayError(float coordX,float coordY){
+  posX = (coordY)*127 + 590;
+  posY = (-coordX)*127 + 280;
+  bool hay = false;
+
+  //zona izquierda del todo
+  if(posX < 14){
+    posX = 17;
+  }
+  //zona derecha del todo
+  if(posX > 625){
+    posX = 622;
+  }
+  //zona arriba del todo
+  if(posY < 14){
+    posY = 17;
+  }
+  //zona abajo del todo
+  if(posY > 353){
+    posY = 350;
+  }
+  //gondola de arriba
+  if(posX > 224 && posX < 593 && posY > 12 && posY < 64){
+    posY = 67;
+  }
+  //gondola de abajo
+  if(posX > 224 && posX < 594 && posY > 303 && posY < 355){
+    posY = 300;
+  }
+  //gondola del medio
+  if(posX > 129 && posX < 549 && posY > 138 && posY < 227){
+    if(posX > 534){
+      posX = 552;
+    }
+    if(posX < 114){
+      posX = 126;
+    }
+    if(posY > 182){
+      posY = 135;
+    }
+    else{
+      posY = 230;
+    }
+  }
+  //FUNCION INVERSA PARA PASAR DE PIXELES A METROS
+  y_m = (posX - 590)/127;
+  x_m = -(posY - 280)/127;
 }
 
 void enviarData(){
