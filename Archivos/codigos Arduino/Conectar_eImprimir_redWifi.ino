@@ -1,12 +1,12 @@
 #include "Wire.h"
 
 
-
 bool connected = false;
 
 #include <ESP8266WiFiMulti.h>
 
 ESP8266WiFiMulti wifiMulti;
+float miRSSI = WiFi.RSSI();
 
 // WiFi connect timeout per AP. Increase when connecting takes longer.
 const uint32_t connectTimeoutMs = 1200;
@@ -54,16 +54,36 @@ void loop() {
       connected = true;
     }
     if(red=="esp-wifi-b"){
-      Serial.println("2");
+         if(miRSSI < 35);{
+          Serial.println("2");
+         }
+         else{
+          Serial.println("b");
+         }
     }
-    if(red=="esp-wifi-c"){
-      Serial.println(3); 
+   if(red=="esp-wifi-c"){
+         if(miRSSI < 35);{
+          Serial.println("3");
+         }
+         else{
+          Serial.println("c");
+         }
     }
-    if(red=="esp-wifi-d"){
-      Serial.println("4"); 
+   if(red=="esp-wifi-d"){
+         if(miRSSI < 35);{
+          Serial.println("4");
+         }
+         else{
+          Serial.println("d");
+         }
     }
-    if(red=="esp-wifi-e"){
-      Serial.println("5");
+   if(red=="esp-wifi-e"){
+         if(miRSSI < 35);{
+          Serial.println("5");
+         }
+         else{
+          Serial.println("d");
+         }
     }
     WiFi.disconnect();
   } else {
