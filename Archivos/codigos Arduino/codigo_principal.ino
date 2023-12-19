@@ -472,7 +472,7 @@ bool iniciado = false;
 
 void loop() {
     //IMPRIMIR PUBLICIDADES DEPENDIENDO DE QUE NUMERO LLEGUE POR EL MONITOR SERIAL
-    corregirErrorWifi();
+    //corregirErrorWifi();
 
     //ENCODER
     // Lee el estado de la salida A (D7)
