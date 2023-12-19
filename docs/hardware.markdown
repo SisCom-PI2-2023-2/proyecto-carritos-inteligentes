@@ -50,5 +50,10 @@ Proporciona información sobre el sentido del movimiento del sistema. Gracias a 
 Es nuestra forma de comunicar al cliente. La misma despliega información sobre el turno actual y el turno propio de algun servicio, así como diferentes publicidades u ofertas que varían dependiendo de la zona en la que se encuentre el sistema.
 
 
+## A continuación se muestra un video explicativo del sistema
+<video width="320" height="240" controls>
+  <source src="" type="video/mp4">
+  Tu navegador no soporta el elemento de video.
+</video>
 
 
