@@ -17,8 +17,8 @@ const int pinBuzzer = 14;
 MPU9250_WE myMPU9250 = MPU9250_WE(MPU9250_ADDR);
 
 // Credenciales de la red WiFi
-const char* ssid = "esp-wifi-b";
-const char* password = "esp_wifi_b";
+const char* ssid = "juanfra";
+const char* password = "juanfrapm";
 
 // Host de ThingsBoard
 const char* mqtt_server = "mqtt.thingsboard.cloud"; 
@@ -125,9 +125,7 @@ String texto2;
 
 String staticMessage;
 String scrollingMessage; 
-String mensaje1 = "Oferta de Hamburguesas, compra 3 y paga 1.       | ";
-String mensaje2 = "Oferta de Alfajores, con la compra de 2 alfajores te llevas un poster de regalo       | ";
-String mensaje3 = "El proyecto no sirve con wifi       | ";
+
 
 // Función de callback para recepción de mensajes MQTT (Tópicos a los que está suscrita la placa)
 // Se llama cada vez que arriba un mensaje entrante (En este ejemplo la placa se suscribirá al tópico: v1/devices/me/rpc/request/+)
@@ -297,7 +295,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
             if (estado ) {
               //Serial.println("SumarCarniceria");
               numeroUsuario2 = turnoLibre;
-              turnoLibre=turnoLibre+1;|
+              turnoLibre=turnoLibre+1;
               diferencia2=numeroUsuario2-numeroCarniceria;
                //Serial.println(numeroUsuario2);
             } else {
@@ -423,6 +421,20 @@ void setup() {
   pinMode(D8, INPUT);  // pin D8
   // Lee el estado inicial de la salida A (D1)
   estadoPrevioA = digitalRead(D7);
+
+  lcd.setCursor(0, 0);
+  lcd.print(staticMessage);
+
+  now = millis();
+  if (now - lastScroll > 300) {
+    lastScroll = now;
+    posicion = scrollMessage(1, scrollingMessage, posicion, totalColumns);
+  }
+
+  texto1= String(numeroUsuario1);
+  texto2= String(numeroCarniceria);
+  staticMessage= "num:"+ texto1+" - Act:"+texto2;
+
 }
 
 
@@ -459,42 +471,8 @@ bool iniciado = false;
 //========= BUCLE PRINCIPAL =========/
 
 void loop() {
-  if (Serial.available() > 0) {
-    incomingByte = Serial.read();
-    //esp-wifi-b
-    if(incomingByte == 98){
-      //iniciado = true;
-    }
-  }
-  if(!iniciado){
-    //Serial.print("sistema NO iniciado");
-  }
-  if(!iniciado){
-    //Serial.print("sistema iniciado");
     //IMPRIMIR PUBLICIDADES DEPENDIENDO DE QUE NUMERO LLEGUE POR EL MONITOR SERIAL
-    if (Serial.available() > 0) {
-      incomingByte = Serial.read();
-      Serial.println(incomingByte);
-      //esp-wifi-c
-      if(incomingByte == 99){
-        lcd.setCursor(0, 1);
-        lcd.print("publcidad-c");
-      }
-      //esp-wifi-d
-      if(incomingByte == 100){
-        lcd.setCursor(0, 1);
-        lcd.print("publcidad-d");
-      }
-      //esp-wifi-e
-      if(incomingByte == 101){
-        lcd.setCursor(0, 1);
-        lcd.print("publcidad-e");
-      }
-      if(incomingByte == 120){
-        lcd.setCursor(0, 1);
-        lcd.print("no conectado");
-      }
-    }
+    corregirErrorWifi();
 
     //ENCODER
     // Lee el estado de la salida A (D7)
@@ -503,9 +481,9 @@ void loop() {
     if (estadoA != estadoPrevioA) {
       // Si el estado de salida B (D8) es diferente del estado de salida A (D7) el codificador esta girando a la derecha
       if (digitalRead(D8) != estadoA) {
-        adelante = true;
+        adelante = false;
       } else {
-        adelante = false; 
+        adelante = true; 
       }
     }
     //Actualizo el estado
@@ -561,26 +539,84 @@ void loop() {
 
       x_m = x_m1 + ((velY*dt)/1000)*cos(thetaZ);
       y_m = y_m1 + ((velY*dt)/1000)*sin(thetaZ);
-
+/*
       Serial.print("posx:");
       Serial.print(x_m);
       Serial.print(",posy:");
       Serial.println(y_m);
       Serial.println(adelante);
+      */
       cuentaActual = millis();
       if(cuentaActual - cuentaAnterior >= 1000){
         cuentaAnterior = cuentaActual;
-        //hayError(x_m,y_m);
+        hayError(x_m,y_m);
         str_pos_x += x_m+5;
         str_pos_y += y_m+5;
       }
       if(str_pos_x.length() > 32){
+        lcd.setCursor(0, 0);
+        lcd.print(staticMessage);
+
+        now = millis();
+        if (now - lastScroll > 300) {
+          lastScroll = now;
+          posicion = scrollMessage(1, scrollingMessage, posicion, totalColumns);
+        }
+
+        texto1= String(numeroUsuario1);
+        texto2= String(numeroCarniceria);
+        staticMessage= "num:"+ texto1+" - Act:"+texto2;
+
         enviarData();
         str_pos_x = "";
         str_pos_y = "";
       }
     }
-  }
+}
+
+void corregirErrorWifi(){
+  if (Serial.available() > 0) {
+      incomingByte = Serial.read();
+      //esp-wifi-a
+      if(incomingByte == 49){
+        lcd.setCursor(0, 1);
+        lcd.print("                ");
+        lcd.setCursor(0, 1);
+        lcd.print("Oferta de Hamburguesas, compra 3 y paga 1.");
+        posX = 265;
+        posY = 80;
+        y_m = (posX - 60)/300;
+        x_m = -(posY - 330)/300;
+      }
+      //esp-wifi-b
+      if(incomingByte == 50){
+        lcd.setCursor(0, 1);
+        lcd.print("                ");
+        lcd.setCursor(0, 1);
+        lcd.print("Oferta de Alfajores, con la compra de 2 alfajores te llevas un poster de regalo");
+        posX = 550;
+        posY = 80;
+        y_m = (posX - 60)/300;
+        x_m = -(posY - 330)/300;
+      }
+      //esp-wifi-c
+      if(incomingByte == 51){
+        lcd.setCursor(0, 1);
+        lcd.print("                ");
+        lcd.setCursor(0, 1);
+        lcd.print("2X1 VINO SANTA TERESA SUAVE");
+        posX = 408;
+        posY = 290;
+        y_m = (posX - 60)/300;
+        x_m = -(posY - 330)/300;
+      }
+      if(incomingByte == 120){
+        lcd.setCursor(0, 1);
+        lcd.print("                ");
+        lcd.setCursor(0, 1);
+        lcd.print("Optishop");
+      }
+    }
 }
 
 void hayError(float coordX,float coordY){
@@ -633,13 +669,6 @@ void hayError(float coordX,float coordY){
 }
 
 void enviarData(){
-  
-  
-  // === Realizar las tareas asignadas al dispositivo ===
-  // En este caso se medirá temperatura y humedad para reportar periódicamente
-  // El control de tiempo se hace con millis para que no sea bloqueante y en "paralelo" completar
-  // ciclos del bucle principal
-  
     // Publicar los datos en el tópio de telemetría para que el servidor los reciba
     DynamicJsonDocument resp(20480);
     
