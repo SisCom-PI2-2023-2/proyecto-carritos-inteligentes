@@ -28,7 +28,7 @@ description: >- # this means to ignore newlines until "baseurl:"
   Esta página ha sido diseñada y desarrollada con el compromiso de seguir las reglas de netiqueta establecidas.
 baseurl: "/proyecto-carritos-inteligentes" # the subpath of your site, e.g. /blog
 url: "https://siscom-pi2-2023-2.github.io" # the base hostname & protocol for your site, e.g. http://example.com
-url: "http://aulas.uruguayeduca.edu.uy/pluginfile.php/8441/mod_resource/content/1/Netiqueta.%20Uruguay%20Educa.pdf"
+
 #twitter_username: jekyllrb
 #github_username:  jekyll
 
