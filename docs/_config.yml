@@ -22,6 +22,7 @@ url: https://siscom-pi2-2023-2.github.io/proyecto-carritos-inteligentes  # the b
 
 title: OptiShop
 email: your-email@example.com
+[reglas de etiqueta](http://aulas.uruguayeduca.edu.uy/pluginfile.php/8441/mod_resource/content/1/Netiqueta.%20Uruguay%20Educa.pdf)
 description: >- # this means to ignore newlines until "baseurl:"
   Trabajo realizado en el marco de la asignatura Proyecto Integrador 2, Universidad ORT Uruguay.
 baseurl: "/proyecto-carritos-inteligentes" # the subpath of your site, e.g. /blog
