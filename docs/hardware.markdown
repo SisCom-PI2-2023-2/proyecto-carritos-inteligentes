@@ -52,7 +52,7 @@ Es nuestra forma de comunicar al cliente. La misma despliega información sobre 
 
 ## A continuación se muestra un video explicativo del sistema
 <video width="320" height="240" controls>
-  <source src="" type="video/mp4">
+  <source src="https://github.com/SisCom-PI2-2023-2/proyecto-carritos-inteligentes/raw/main/docs/assets/Video%20explicacion%20tecnica.mp4" type="video/mp4">
   Tu navegador no soporta el elemento de video.
 </video>
 
