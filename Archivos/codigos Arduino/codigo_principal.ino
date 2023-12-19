@@ -17,8 +17,8 @@ const int pinBuzzer = 14;
 MPU9250_WE myMPU9250 = MPU9250_WE(MPU9250_ADDR);
 
 // Credenciales de la red WiFi
-const char* ssid = "Lucas";
-const char* password = "lucas109";
+const char* ssid = "esp-wifi-b";
+const char* password = "esp_wifi_b";
 
 // Host de ThingsBoard
 const char* mqtt_server = "mqtt.thingsboard.cloud"; 
@@ -297,7 +297,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
             if (estado ) {
               //Serial.println("SumarCarniceria");
               numeroUsuario2 = turnoLibre;
-              turnoLibre=turnoLibre+1;
+              turnoLibre=turnoLibre+1;|
               diferencia2=numeroUsuario2-numeroCarniceria;
                //Serial.println(numeroUsuario2);
             } else {
@@ -463,17 +463,18 @@ void loop() {
     incomingByte = Serial.read();
     //esp-wifi-b
     if(incomingByte == 98){
-      iniciado = true;
+      //iniciado = true;
     }
   }
   if(!iniciado){
-    serial.print("sistema NO iniciado");
+    //Serial.print("sistema NO iniciado");
   }
-  if(iniciado){
-    serial.print("sistema iniciado");
+  if(!iniciado){
+    //Serial.print("sistema iniciado");
     //IMPRIMIR PUBLICIDADES DEPENDIENDO DE QUE NUMERO LLEGUE POR EL MONITOR SERIAL
     if (Serial.available() > 0) {
       incomingByte = Serial.read();
+      Serial.println(incomingByte);
       //esp-wifi-c
       if(incomingByte == 99){
         lcd.setCursor(0, 1);
@@ -565,7 +566,7 @@ void loop() {
       Serial.print(x_m);
       Serial.print(",posy:");
       Serial.println(y_m);
-      Serial.print(adelante);
+      Serial.println(adelante);
       cuentaActual = millis();
       if(cuentaActual - cuentaAnterior >= 1000){
         cuentaAnterior = cuentaActual;
@@ -583,8 +584,8 @@ void loop() {
 }
 
 void hayError(float coordX,float coordY){
-  posX = (coordY)*127 + 590;
-  posY = (-coordX)*127 + 280;
+  posX = (coordY)*300 + 60;
+  posY = (-coordX)*300 + 330;
   bool hay = false;
 
   //zona izquierda del todo
@@ -627,8 +628,8 @@ void hayError(float coordX,float coordY){
     }
   }
   //FUNCION INVERSA PARA PASAR DE PIXELES A METROS
-  y_m = (posX - 590)/127;
-  x_m = -(posY - 280)/127;
+  y_m = (posX - 60)/300;
+  x_m = -(posY - 330)/300;
 }
 
 void enviarData(){
