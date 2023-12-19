@@ -34,6 +34,12 @@ Nos especializamos en el desarrollo de carritos inteligentes para supermercados,
 
 ![foto-terminada](/assets/foto-terminada.jpg){:class="foto-terminada"}
 
+Te invitamos a ver este innovador sistema en acción
+<video width="320" height="240" controls>
+  <source src="https://github.com/SisCom-PI2-2023-2/proyecto-carritos-inteligentes/raw/main/docs/assets/VideoComercial.mp4" type="video/mp4">
+  Tu navegador no soporta el elemento de video.
+</video>
+
 ## Descubre Más
 En esta sección te invitamos a adentrarte en el sitio para concer más sobre nuestra empresa y explorar la esencia de lo que hacemos. Conoce a las mentes detrás de nuestro proyecto, sumérgete en las características clave de nuestro innovador carrito inteligente y sigue nuestro viaje en su desarrollo. Te abrimos las puertas para que descubras quiénes somos, cómo operamos y cómo estamos dando forma al futuro de las compras en supermercados. ¡Acompáñanos en este viaje de descubrimiento!
 
