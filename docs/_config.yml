@@ -24,6 +24,8 @@ title: OptiShop
 email: your-email@example.com
 description: >- # this means to ignore newlines until "baseurl:"
   Trabajo realizado en el marco de la asignatura Proyecto Integrador 2, Universidad ORT Uruguay.
+
+  Esta página ha sido diseñada y desarrollada con el compromiso de seguir las reglas de netiqueta establecidas en el siguiente enlace.
 baseurl: "/proyecto-carritos-inteligentes" # the subpath of your site, e.g. /blog
 url: "https://siscom-pi2-2023-2.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 #twitter_username: jekyllrb
